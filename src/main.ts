@@ -12,6 +12,8 @@ async function bootstrap() {
    */
   app.use(helmet());
 
+  app.setGlobalPrefix('api');
+
   /**
    * Turn on the display of documentation if we are in the development environment
    */
