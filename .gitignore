@@ -105,3 +105,6 @@ dist
 
 # VSCODE files
 .vscode
+
+# Minio cash files
+storage/

@@ -1,1 +1,1 @@
-export { initSwagger } from './swagger';
+export { setupSwagger } from './setup-swagger';
