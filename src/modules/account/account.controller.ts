@@ -22,7 +22,7 @@ import {
   UserNotFoundExceptionFilter,
 } from './filters';
 import { ACCOUNT_SERVICE } from './di.constants';
-import { IAccountService } from './account-service.interface';
+import { IAccountService } from './interfaces';
 import { IJwtData } from './interfaces';
 
 @Controller('v1/account')
