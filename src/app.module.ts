@@ -4,11 +4,18 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import {
   AccountModule,
   CommentModule,
+  HealthCheckerModule,
   MovieModule,
   UserModule,
 } from './modules';
 
-const modules = [AccountModule, CommentModule, MovieModule, UserModule];
+const modules = [
+  AccountModule,
+  CommentModule,
+  HealthCheckerModule,
+  MovieModule,
+  UserModule,
+];
 
 @Module({
   imports: [
