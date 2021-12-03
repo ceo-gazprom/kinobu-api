@@ -32,10 +32,23 @@ async function bootstrap(): Promise<NestExpressApplication> {
   app.setGlobalPrefix('api');
 
   /**
+   * Allows you to have different versions of routes
+   * @see https://docs.nestjs.com/techniques/versioning
+   */
+  app.enableVersioning();
+
+  /**
    * Automatic validation at the application level, endpoints are protected from receiving incorrect data.
    * @see https://docs.nestjs.com/techniques/validation
    */
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      /** Property not included in the whitelist is automatically stripped from the resulting object */
+      whitelist: true,
+      /** Automatically transform payloads to be objects types according to their DTO classes */
+      transform: true,
+    }),
+  );
 
   app.use(compression());
 
