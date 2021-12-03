@@ -13,7 +13,7 @@ import { UserDto } from './dto';
 import { ParseIntPipe } from '../../pipes';
 
 @Controller({
-  version: 'v1',
+  version: '1',
   path: 'user',
 })
 @ApiTags('USER')

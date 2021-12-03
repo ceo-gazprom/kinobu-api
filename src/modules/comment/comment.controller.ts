@@ -15,7 +15,10 @@ import { ICommentService } from './comment-service.interface';
 import { CommentDto } from './dto';
 import { ParseIntPipe } from '../../pipes';
 
-@Controller('v1/comment')
+@Controller({
+  version: '1',
+  path: 'comment',
+})
 @ApiTags('COMMENTS')
 export class CommentController {
   private readonly logger = new Logger(CommentController.name);

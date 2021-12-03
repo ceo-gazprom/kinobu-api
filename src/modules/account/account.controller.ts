@@ -25,7 +25,10 @@ import { ACCOUNT_SERVICE } from './di.constants';
 import { IAccountService } from './interfaces';
 import { IJwtData } from './interfaces';
 
-@Controller('v1/account')
+@Controller({
+  version: '1',
+  path: 'account',
+})
 @ApiTags('ACCOUNTS')
 export class AccountController {
   private readonly logger = new Logger(AccountController.name);
