@@ -14,7 +14,10 @@ import { IMovieService } from './movie-service.interface';
 import { MovieDto, CreateMovieDto } from './dto';
 import { ParseIntPipe } from '../../pipes';
 
-@Controller('/v1/movie')
+@Controller({
+  version: '1',
+  path: 'movie',
+})
 @ApiTags('MOVIES')
 export class MovieController {
   constructor(
