@@ -8,11 +8,10 @@ import {
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
-import { ApiTags, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiResponse, ApiOperation, ApiParam } from '@nestjs/swagger';
 import { MOVIE_SERVICE } from './di.constnt';
-import { IMovieService } from './movie-service.interface';
+import { IMovieService } from './interfaces/movie-service.interface';
 import { MovieDto, CreateMovieDto } from './dto';
-import { ParseIntPipe } from '../../pipes';
 
 @Controller({
   version: '1',
@@ -36,15 +35,20 @@ export class MovieController {
     return movies.map((movie) => MovieDto.fromEntity(movie));
   }
 
-  @Get('/:id')
+  @Get('/:movieId')
   @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Get movie by id' })
+  @ApiParam({
+    name: 'movieId',
+    description: 'movie id',
+  })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Get movie data by id',
     type: MovieDto,
   })
   public async getMovieById(
-    @Param('id', new ParseIntPipe()) movieId: number,
+    @Param('movieId') movieId: number,
   ): Promise<MovieDto> {
     const movie = await this.movieService.getById(movieId);
     return MovieDto.fromEntity(movie);

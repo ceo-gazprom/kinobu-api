@@ -1,5 +1,5 @@
-import type { MovieEntity } from './movie.entity';
-import type { CreateMovieDto } from './dto';
+import type { MovieEntity } from '../movie.entity';
+import type { CreateMovieDto } from '../dto';
 
 export interface IMovieService {
   getMoviesList(): Promise<MovieEntity[]>;

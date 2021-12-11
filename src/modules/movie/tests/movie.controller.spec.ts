@@ -16,7 +16,7 @@ describe('MovieController', () => {
   describe('getMovieById', () => {
     it('should return movie data', () => {
       const appController = app.get<MovieController>(MovieController);
-      expect(appController.getMovieById()).toBe('http://localhost');
+      expect(appController.getMovieById(12)).toBe('http://localhost');
     });
   });
 });

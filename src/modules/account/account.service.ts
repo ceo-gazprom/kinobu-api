@@ -9,21 +9,21 @@ import { InjectRepository } from '@nestjs/typeorm';
 import type { Repository } from 'typeorm';
 import { compare } from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { IAccountService } from './account-service.interface';
-import { AccountRepository } from './account.repository';
+import { IAccountService } from './interfaces';
 import { EMAIL_PROVIDER, IEmailProvider } from '../../shared/providers/email';
 import { ReservedUsernameEntity, WorstPasswordEntity } from './entities';
 import { AccountEntity } from './entities';
 import type { CreateAccountDto, LoginAccountDto } from './dto';
-import { ICreateAccount, IJwtData } from './interfaces';
+import { ICreateAccount, IAccountRepository, IJwtData } from './interfaces';
+import { ACCOUNT_REPOSITORY } from './di.constants';
 
 @Injectable()
 export class AccountService implements IAccountService {
   private readonly logger = new Logger(AccountService.name);
   constructor(
     @Inject(EMAIL_PROVIDER) private readonly emailProvider: IEmailProvider,
-    @InjectRepository(AccountRepository)
-    private readonly accountRepository: AccountRepository,
+    @Inject(ACCOUNT_REPOSITORY)
+    private readonly accountRepository: IAccountRepository,
     @InjectRepository(ReservedUsernameEntity)
     private reservedUsernameRepository: Repository<ReservedUsernameEntity>,
     @InjectRepository(WorstPasswordEntity)

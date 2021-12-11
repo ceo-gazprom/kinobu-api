@@ -1,12 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { IMovieService } from './movie-service.interface';
+import { IMovieService } from './interfaces/movie-service.interface';
 import { MovieRepository } from './movie.repository';
 import type { MovieEntity } from './movie.entity';
 import type { CreateMovieDto } from './dto';
 
 @Injectable()
 export class MovieService implements IMovieService {
+  /**
+   *
+   */
+  private readonly logger: Logger = new Logger(MovieService.name);
+
   constructor(
     @InjectRepository(MovieRepository)
     private readonly movieRepository: MovieRepository,

@@ -1,6 +1,6 @@
-import type { CreateAccountDto, LoginAccountDto } from './dto';
-import type { AccountEntity } from './entities';
-import { IJwtData, ICreateAccount } from './interfaces';
+import type { CreateAccountDto, LoginAccountDto } from '../dto';
+import type { AccountEntity } from '../entities';
+import { IJwtData, ICreateAccount } from '../interfaces';
 
 export interface IAccountService {
   login(loginAccountDto: LoginAccountDto, ip: string): Promise<IJwtData>;

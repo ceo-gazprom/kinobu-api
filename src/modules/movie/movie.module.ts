@@ -11,3 +11,5 @@ import { MovieService } from './movie.service';
   providers: [{ useClass: MovieService, provide: MOVIE_SERVICE }],
 })
 export class MovieModule {}
+
+{provide: REP_TOKEN, useFactory:(connection: Connection)=>connection.getRepository<AccessCountry>(AccessCountry)}

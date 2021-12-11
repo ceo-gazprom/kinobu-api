@@ -8,10 +8,15 @@ import { JwtStrategy } from './strategies';
 import { ReservedUsernameEntity, WorstPasswordEntity } from './entities';
 import { AccountRepository } from './account.repository';
 import { AccountController } from './account.controller';
-import { ACCOUNT_SERVICE, JWT_SERVICE } from './di.constants';
+import {
+  ACCOUNT_SERVICE,
+  JWT_SERVICE,
+  ACCOUNT_REPOSITORY,
+} from './di.constants';
 import { AccountService } from './account.service';
 import {} from './jwt.service';
 import { EMAIL_PROVIDER, EmailProvider } from '../../shared/providers/email';
+import { AccountRepository } from './account.repository';
 
 const providers: Provider[] = [
   {
@@ -21,6 +26,10 @@ const providers: Provider[] = [
   {
     useClass: EmailProvider,
     provide: EMAIL_PROVIDER,
+  },
+  {
+    useClass: AccountRepository,
+    provide: ACCOUNT_REPOSITORY,
   },
 ];
 

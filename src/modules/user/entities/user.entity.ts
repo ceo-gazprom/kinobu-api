@@ -13,29 +13,29 @@ import { hash, compare } from 'bcrypt';
 })
 export class UserEntity {
   @PrimaryGeneratedColumn()
-  id: number;
+  public readonly id: number;
 
   @Column({ unique: true })
-  email: string;
+  public email: string;
 
   @Column()
-  password: string;
+  public password: string;
 
   @Column({ unique: true })
-  username: string;
+  public username: string;
 
   @Column({
     type: 'int',
     default: 0,
   })
-  rating: number;
+  public rating: number;
 
   @CreateDateColumn({
     name: 'created_at',
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
   })
-  createdAt: Date;
+  private createdAt: Date;
 
   @UpdateDateColumn({
     name: 'updated_at',
@@ -43,7 +43,7 @@ export class UserEntity {
     default: () => 'CURRENT_TIMESTAMP(6)',
     onUpdate: 'CURRENT_TIMESTAMP(6)',
   })
-  updatedAt: Date;
+  private updatedAt: Date;
 
   @BeforeInsert()
   async hashPassword(): Promise<void> {

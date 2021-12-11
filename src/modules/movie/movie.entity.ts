@@ -11,34 +11,34 @@ import {
 })
 export class MovieEntity {
   @PrimaryGeneratedColumn()
-  id: number;
+  public id: number;
 
   @Column({
     name: 'kp_id',
     type: 'int',
     nullable: true,
   })
-  kpId: number;
+  public kpId: number;
 
   @Column({
     name: 'imdb_id',
     type: 'int',
     nullable: true,
   })
-  imdbId: number;
+  public imdbId: number;
 
   @Column({
     type: 'int',
     default: 0,
   })
-  rating: number;
+  public rating: number;
 
   @CreateDateColumn({
     name: 'created_at',
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
   })
-  createdAt: Date;
+  private createdAt: Date;
 
   @UpdateDateColumn({
     name: 'updated_at',
@@ -46,5 +46,5 @@ export class MovieEntity {
     default: () => 'CURRENT_TIMESTAMP(6)',
     onUpdate: 'CURRENT_TIMESTAMP(6)',
   })
-  updatedAt: Date;
+  private updatedAt: Date;
 }
