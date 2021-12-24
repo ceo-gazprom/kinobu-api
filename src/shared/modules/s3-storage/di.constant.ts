@@ -1,1 +1,0 @@
-export const S3_STORAGE_SERVICE = Symbol('S3_STORAGE_SERVICE');
