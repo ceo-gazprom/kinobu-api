@@ -1,4 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import type { Repository } from 'typeorm';
 import { AbstractRepository } from '../common';
 import { AccountEntity } from './entities';
 import { IAccountRepository, ICreateAccount } from './interfaces';
@@ -8,6 +10,13 @@ export class AccountRepository
   extends AbstractRepository<AccountEntity>
   implements IAccountRepository
 {
+  constructor(
+    @InjectRepository(AccountEntity)
+    private readonly accountRepository: Repository<AccountEntity>,
+  ) {
+    super(accountRepository);
+  }
+
   /**
    *
    */

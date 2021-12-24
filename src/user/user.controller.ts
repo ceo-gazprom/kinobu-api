@@ -7,9 +7,10 @@ import {
   HttpCode,
 } from '@nestjs/common';
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
-import { USER_SERVICE } from './di.constant';
+import { USER_SERVICE } from './user.constants';
 import { IUserService } from './interfaces';
 import { UserDto } from './dto';
+import { UserNotFoundExceptionFilter } from './filters';
 
 @Controller({
   version: '1',
@@ -28,8 +29,12 @@ export class UserController {
     description: 'Get user data by user id',
     type: UserDto,
   })
-  public async getUserById(@Param('userId') id: number): Promise<UserDto> {
-    const user = await this.userService.getById(id);
+  public async getUserById(@Param('userId') userId: number): Promise<UserDto> {
+    const user = await this.userService.getById(userId);
+
+    /** We throw an error if a user with this id does not exist */
+    if (!user) throw new UserNotFoundExceptionFilter(userId);
+
     return UserDto.fromEntity(user);
   }
 }

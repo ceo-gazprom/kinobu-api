@@ -22,7 +22,7 @@ import {
   AccountEntity,
 } from './entities';
 import type { CreateAccountDto, LoginAccountDto } from './dto';
-import { ACCOUNT_REPOSITORY } from './di.constants';
+import { ACCOUNT_REPOSITORY } from './account.constants';
 
 @Injectable()
 export class AccountService implements IAccountService {
@@ -76,6 +76,7 @@ export class AccountService implements IAccountService {
     const result = await this.accountRepository.findOneByCondition({
       username,
     });
+
     return result ? true : false;
   }
 

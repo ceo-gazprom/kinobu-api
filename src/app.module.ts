@@ -12,13 +12,13 @@ import { UserModule } from './user';
 
 @Module({
   imports: [
-    // AccountModule,
-    // CommentModule,
+    AccountModule,
+    CommentModule,
     DatabaseModule,
     // HealthModule,
     MovieModule,
-    // StorageModule,
-    // UserModule,
+    StorageModule,
+    UserModule,
   ],
 })
 export class AppModule {}

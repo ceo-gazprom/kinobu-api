@@ -23,7 +23,6 @@ export class AccountEntity extends BaseEntity {
   public email: string;
 
   @Column({
-    name: 'phone_number',
     unique: true,
   })
   public phoneNumber: string;
@@ -34,14 +33,10 @@ export class AccountEntity extends BaseEntity {
   @Column()
   public ip: string;
 
-  @CreateDateColumn({
-    name: 'created_at',
-  })
+  @CreateDateColumn()
   public createdAt: Date;
 
-  @UpdateDateColumn({
-    name: 'updated_at',
-  })
+  @UpdateDateColumn()
   public updatedAt: Date;
 
   @Column({

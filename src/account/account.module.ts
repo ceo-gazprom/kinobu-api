@@ -4,14 +4,18 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './strategies';
-import { ReservedUsernameEntity, WorstPasswordEntity } from './entities';
+import {
+  AccountEntity,
+  ReservedUsernameEntity,
+  WorstPasswordEntity,
+} from './entities';
 import { AccountRepository } from './account.repository';
 import { AccountController } from './account.controller';
 import {
   ACCOUNT_SERVICE,
   JWT_SERVICE,
   ACCOUNT_REPOSITORY,
-} from './di.constants';
+} from './account.constants';
 import { AccountService } from './account.service';
 import {} from './jwt.service';
 import { EMAIL_PROVIDER, EmailProvider } from '../email';
@@ -31,11 +35,11 @@ const providers: Provider[] = [
   },
 ];
 
-const entities = [ReservedUsernameEntity, WorstPasswordEntity];
+const entities = [AccountEntity, ReservedUsernameEntity, WorstPasswordEntity];
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([AccountRepository, ...entities]),
+    TypeOrmModule.forFeature([...entities]),
     PassportModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET,

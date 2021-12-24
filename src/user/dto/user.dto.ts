@@ -8,18 +8,12 @@ export class UserDto {
   id: number;
 
   @ApiProperty({
-    example: 'example@example.com',
-  })
-  email: string;
-
-  @ApiProperty({
     example: 'example',
   })
   username: string;
 
   static fromEntity(userEntity: UserEntity): UserDto {
     const user = new UserDto();
-    user.email = userEntity.email;
     user.username = userEntity.username;
 
     return user;

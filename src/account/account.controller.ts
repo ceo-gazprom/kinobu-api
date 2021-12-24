@@ -21,7 +21,7 @@ import {
   PasswordNotMeetRequirementExceptionFilter,
   UserNotFoundExceptionFilter,
 } from './filters';
-import { ACCOUNT_SERVICE } from './di.constants';
+import { ACCOUNT_SERVICE } from './account.constants';
 import { IAccountService } from './interfaces';
 import { IJwtData } from './interfaces';
 
@@ -29,7 +29,7 @@ import { IJwtData } from './interfaces';
   version: '1',
   path: 'account',
 })
-@ApiTags('ACCOUNTS')
+@ApiTags('ACCOUNT')
 export class AccountController {
   private readonly logger = new Logger(AccountController.name);
 
@@ -76,7 +76,6 @@ export class AccountController {
     }
 
     const { username, email, mobilePhone, password } = createAccountDto;
-
     /**
      * Check if such name is used
      */

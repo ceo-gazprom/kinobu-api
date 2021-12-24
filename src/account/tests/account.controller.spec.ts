@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import type { Provider } from '@nestjs/common';
 import { AccountController } from '../account.controller';
-import { ACCOUNT_SERVICE } from '../di.constants';
+import { ACCOUNT_SERVICE } from '../account.constants';
 import { AccountService } from '../account.service';
 import { IAccountService } from '../interfaces';
 import { EMAIL_PROVIDER } from '../../shared/providers/email';

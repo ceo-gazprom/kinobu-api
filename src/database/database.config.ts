@@ -1,4 +1,5 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { DatabaseLogger } from './database-logger';
 import { SnakeNamingStrategy } from './snake-naming.strategy';
 /**
  *
@@ -12,6 +13,9 @@ export const DatabseConfig: TypeOrmModuleOptions = {
   database: process.env.DB_NAME,
   entities: ['dist/**/*.entity{.ts,.js}'],
   namingStrategy: new SnakeNamingStrategy(),
+  logging: process.env.ENVIRONMENT == 'development' ? true : false,
+  logger:
+    process.env.ENVIRONMENT == 'development' ? new DatabaseLogger() : undefined,
 
   /** We are using migrations, synchronize should be set to false. */
   synchronize: false,
@@ -21,15 +25,13 @@ export const DatabseConfig: TypeOrmModuleOptions = {
    * you can disable this if you prefer running migration manually.
    */
   migrationsRun: true,
-  logging: true,
-  logger: 'advanced-console',
 
   /**
    * Allow both start:prod and start:dev to use migrations
    * __dirname is either dist or src folder, meaning either
    * the compiled js in prod or the ts in dev.
    */
-  migrations: [__dirname + '/database/migrations/**/*{.ts,.js}'],
+  migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
   cli: {
     // Location of migration should be inside src folder
     // to be compiled into dist/ folder.
