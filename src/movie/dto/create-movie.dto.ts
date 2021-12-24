@@ -2,13 +2,17 @@ import { ApiProperty } from '@nestjs/swagger';
 import {} from 'class-validator';
 
 export class CreateMovieDto {
-  @ApiProperty()
+  @ApiProperty({
+    example: '105978',
+  })
   kpId?: number;
 
-  @ApiProperty()
+  @ApiProperty({
+    example: '324234',
+  })
   imdbId?: number;
 
-  @ApiProperty()
+  @ApiProperty({})
   originalName: string;
 
   @ApiProperty()

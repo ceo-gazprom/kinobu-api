@@ -55,6 +55,13 @@ export class MovieController {
   }
 
   @Post()
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Create movie' })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Get movie data by id',
+    type: MovieDto,
+  })
   public async createMovie(
     @Body() movieData: CreateMovieDto,
   ): Promise<MovieDto> {
