@@ -43,6 +43,9 @@ const entities = [AccountEntity, ReservedUsernameEntity, WorstPasswordEntity];
     PassportModule,
     JwtModule.register({
       secret: process.env.JWT_SECRET,
+      signOptions: {
+        expiresIn: process.env.JWT_EXPIRATION_TIME,
+      },
     }),
   ],
   controllers: [AccountController],

@@ -27,7 +27,7 @@ export class AccountRepository
   /**
    * The login can be email phone number or username
    */
-  public findByLogin(login: string): Promise<AccountEntity> {
+  public findByLogin(login: string): Promise<AccountEntity | undefined> {
     return this.queryBuilder('account')
       .where(
         'account.phone_number = :phoneNumber AND account.phone_number IS NOT NULL',
@@ -37,6 +37,6 @@ export class AccountRepository
       )
       .orWhere('account.email = :email', { email: login })
       .orWhere('account.username = :username', { username: login })
-      .getOneOrFail();
+      .getOne();
   }
 }

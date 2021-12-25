@@ -108,3 +108,6 @@ dist
 
 # Minio cash files
 /storage/
+
+# Macos cache files
+.DS_Store

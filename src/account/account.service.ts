@@ -6,7 +6,7 @@ import {
   Logger,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import type { Repository } from 'typeorm';
+import type { Repository, UpdateResult } from 'typeorm';
 import { compare } from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import {
@@ -39,30 +39,45 @@ export class AccountService implements IAccountService {
   ) {}
 
   /**
+   * Finds an account with the specified login in the database
    *
+   * @param {String} login - can be email or phone number or username
+   * @returns account entity or undefinded
    */
-  public async login(
-    loginAccountDto: LoginAccountDto,
-    ip: string,
-  ): Promise<IJwtData> {
-    const { login, password } = loginAccountDto;
+  public findAccountByLogin(login: string): Promise<AccountEntity | undefined> {
+    return this.accountRepository.findByLogin(login);
+  }
 
-    const accaunt = await this.getAccountByLogin(login);
-    const { id } = accaunt;
+  /**
+   * Verifies the password using the hash password from the database
+   *
+   * @param {String} password - incoming password
+   * @param {String} hash - hash of the password from databse
+   * @return boolean validation result
+   */
+  public validatePassword(password: string, hash: string): Promise<boolean> {
+    return compare(password, hash);
+  }
 
-    const validate = await this.validatePassword(password, accaunt.password);
-    this.logger.debug(validate);
-    if (!validate)
-      throw new HttpException('Wrong password', HttpStatus.BAD_REQUEST);
+  /**
+   * We update the ip address when sign in complete
+   *
+   * @param {Number} - account id
+   * @param {String} - the ip of the user who is logged in
+   * @returns updated entity
+   * Todo: добавить проверку подозрительного ip
+   */
+  public updateAccountIp(id: number, ip: string): Promise<UpdateResult> {
+    return this.accountRepository.updateById(id, { ip });
+  }
 
-    /**
-     * We update the ip address when sign in complete
-     * Todo: добавить проверку подозрительного ip
-     */
-    this.accountRepository.updateById(id, { ip });
-
+  /**
+   *
+   * @param {Number} id - account id
+   * @returns jwt token
+   */
+  public generateJwtToken(id: number): IJwtData {
     const payload = { userId: id };
-
     return {
       access_token: this.jwtService.sign(payload),
     };
@@ -124,19 +139,5 @@ export class AccountService implements IAccountService {
     createAccountData: ICreateAccount,
   ): Promise<AccountEntity> {
     return this.accountRepository.createAccount(createAccountData);
-  }
-
-  /**
-   * The login can be email phone number or username
-   */
-  private async getAccountByLogin(login: string): Promise<AccountEntity> {
-    return this.accountRepository.findByLogin(login);
-  }
-
-  /**
-   * Verifies the sent password with the password from the database
-   */
-  private validatePassword(password: string, hash: string): Promise<boolean> {
-    return compare(password, hash);
   }
 }

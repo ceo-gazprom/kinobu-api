@@ -8,11 +8,13 @@ import {
   Param,
   HttpCode,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiTags, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { COMMENT_SERVICE } from './di.constant';
 import { ICommentService } from './interfaces';
 import { CommentDto } from './dto';
+import { JwtAuthGuard } from '../common/guards';
 
 @Controller({
   version: '1',
@@ -48,6 +50,8 @@ export class CommentController {
    * Todo: Вычесть рейтинг у пользователя
    */
   @Delete(':commentId')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   public async deleteCommentByID(
     @Param('commentId') commentId: number,
   ): Promise<void> {
@@ -59,6 +63,8 @@ export class CommentController {
    * Todo: Восстановить рейтинг пользователя
    */
   @Post('restore/:commentId')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   public async restoreCommentById(
     @Param('commentId') commentId: number,
   ): Promise<CommentDto> {
@@ -70,9 +76,15 @@ export class CommentController {
 
   @Post('access/ban/:userId')
   @HttpCode(HttpStatus.OK)
-  public async banUser(): Promise<void> {}
+  @ApiBearerAuth()
+  public async banUser(): Promise<void> {
+    return;
+  }
 
   @Post('access/unban/:userId')
   @HttpCode(HttpStatus.OK)
-  public async unbanUser(@Param('userId') userId: number): Promise<void> {}
+  @ApiBearerAuth()
+  public async unbanUser(@Param('userId') userId: number): Promise<void> {
+    return;
+  }
 }

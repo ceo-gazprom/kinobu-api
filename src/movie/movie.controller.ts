@@ -8,7 +8,13 @@ import {
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
-import { ApiTags, ApiResponse, ApiOperation, ApiParam } from '@nestjs/swagger';
+import {
+  ApiTags,
+  ApiResponse,
+  ApiOperation,
+  ApiParam,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { MOVIE_SERVICE } from './movie.constants';
 import { IMovieService } from './interfaces';
 import { MovieDto, CreateMovieDto } from './dto';
@@ -55,6 +61,7 @@ export class MovieController {
   }
 
   @Post()
+  @ApiBearerAuth()
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Create movie' })
   @ApiResponse({

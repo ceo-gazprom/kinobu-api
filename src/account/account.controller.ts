@@ -15,6 +15,7 @@ import { ResponseErrorDto } from '../common/dto';
 import { LoginAccountDto, CreateAccountDto, AccountDto } from './dto';
 import {
   PasswordSameDataExceptionFilter,
+  IncorrectPasswordExceptionFilter,
   UsernameExistExceptionFilter,
   EmailExistExceptionFilter,
   PhoneNumberExistExceptionFilter,
@@ -49,12 +50,26 @@ export class AccountController {
     @RequestIP() ip: string,
     @Body() loginAccountDto: LoginAccountDto,
   ): Promise<IJwtData> {
-    // Todo: проверить вывод ошибок, скорей всего catch перехватит ошибку из сервиса и будет неправильная причина на выходе
-    try {
-      return await this.accountService.login(loginAccountDto, ip);
-    } catch (e) {
-      throw new UserNotFoundExceptionFilter();
-    }
+    const { login, password } = loginAccountDto;
+
+    /**
+     * We check that an account with this login exists
+     */
+    const account = await this.accountService.findAccountByLogin(login);
+    if (!account) throw new UserNotFoundExceptionFilter();
+
+    /**
+     * Checking that the password is correct
+     */
+    const validation = await this.accountService.validatePassword(
+      password,
+      account.password,
+    );
+    if (!validation) throw new IncorrectPasswordExceptionFilter();
+
+    await this.accountService.updateAccountIp(account.id, ip);
+
+    return this.accountService.generateJwtToken(account.id);
   }
 
   @Post('sign-up')
