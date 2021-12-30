@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import type { Repository, UpdateResult } from 'typeorm';
-import { compare } from 'bcrypt';
+import { hash, compare } from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import {
   IAccountService,
@@ -135,9 +135,10 @@ export class AccountService implements IAccountService {
   /**
    *
    */
-  public createAccount(
+  public async createAccount(
     createAccountData: ICreateAccount,
   ): Promise<AccountEntity> {
+    createAccountData.password = await hash(createAccountData.password, 8);
     return this.accountRepository.createAccount(createAccountData);
   }
 }

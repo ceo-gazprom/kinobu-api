@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import type { Provider } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { JwtModule, JwtService } from '@nestjs/jwt';
+import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './strategies';
 import {
@@ -17,7 +17,6 @@ import {
   ACCOUNT_REPOSITORY,
 } from './account.constants';
 import { AccountService } from './account.service';
-import {} from './jwt.service';
 import { EMAIL_PROVIDER, EmailProvider } from '../email';
 
 const providers: Provider[] = [

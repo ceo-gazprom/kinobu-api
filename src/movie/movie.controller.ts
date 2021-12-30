@@ -7,6 +7,7 @@ import {
   Body,
   HttpCode,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -18,6 +19,7 @@ import {
 import { MOVIE_SERVICE } from './movie.constants';
 import { IMovieService } from './interfaces';
 import { MovieDto, CreateMovieDto } from './dto';
+import { JwtAuthGuard } from '../common/guards';
 
 @Controller({
   version: '1',
@@ -61,6 +63,7 @@ export class MovieController {
   }
 
   @Post()
+  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Create movie' })
@@ -70,9 +73,10 @@ export class MovieController {
     type: MovieDto,
   })
   public async createMovie(
-    @Body() movieData: CreateMovieDto,
+    @Body() createMovieDto: CreateMovieDto,
   ): Promise<MovieDto> {
-    const movie = await this.movieService.createMovie(movieData);
+    console.log(createMovieDto);
+    const movie = await this.movieService.createMovie(createMovieDto);
     return MovieDto.fromEntity(movie);
   }
 }

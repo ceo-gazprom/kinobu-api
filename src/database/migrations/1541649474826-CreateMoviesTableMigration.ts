@@ -12,6 +12,7 @@ export class CreateMoviesTableMigration1541649474826
             name: 'id',
             type: 'int',
             isPrimary: true,
+            isGenerated: true,
           },
           {
             name: 'kp_id',

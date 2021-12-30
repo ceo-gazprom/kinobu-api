@@ -5,16 +5,16 @@ export class CreateMovieDto {
   @ApiProperty({
     example: '105978',
   })
-  kpId?: number;
+  kpId: string;
 
   @ApiProperty({
     example: '324234',
   })
-  imdbId?: number;
+  imdbId: string;
 
   @ApiProperty({})
   originalName: string;
 
   @ApiProperty()
-  year: number;
+  year: string;
 }

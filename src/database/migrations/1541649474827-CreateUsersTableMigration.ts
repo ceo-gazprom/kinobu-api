@@ -12,6 +12,7 @@ export class CreateUsersTableMigration1541649474827
             name: 'id',
             type: 'int',
             isPrimary: true,
+            isGenerated: true,
           },
           {
             name: 'username',

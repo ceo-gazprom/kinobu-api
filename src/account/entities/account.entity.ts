@@ -4,10 +4,8 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  BeforeInsert,
   BaseEntity,
 } from 'typeorm';
-import { hash } from 'bcrypt';
 
 @Entity({
   name: 'accounts',
@@ -43,9 +41,4 @@ export class AccountEntity extends BaseEntity {
     default: false,
   })
   public confirmed: boolean;
-
-  @BeforeInsert()
-  async hashPassword() {
-    this.password = await hash(this.password, 8);
-  }
 }
