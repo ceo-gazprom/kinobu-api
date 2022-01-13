@@ -8,6 +8,7 @@ import {
   HttpStatus,
   Body,
   Param,
+  Res,
 } from '@nestjs/common';
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
 import { RequestIP } from './decorators';

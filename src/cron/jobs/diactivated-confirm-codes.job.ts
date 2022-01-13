@@ -5,7 +5,7 @@ import { Cron, CronExpression } from '@nestjs/schedule';
 export class DiactivatedConfirmCodesJob {
   private readonly logger = new Logger(DiactivatedConfirmCodesJob.name);
 
-  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
+  @Cron(CronExpression.EVERY_10_SECONDS)
   runEvery10Seconds() {
     this.logger.log('Cron start');
   }

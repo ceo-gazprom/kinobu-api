@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import type { Provider } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './strategies';
 import {
@@ -17,6 +16,7 @@ import {
   ACCOUNT_REPOSITORY,
 } from './account.constants';
 import { AccountService } from './account.service';
+import { JwtService } from './services';
 import { EMAIL_PROVIDER, EmailProvider } from '../email';
 
 const providers: Provider[] = [
@@ -32,22 +32,17 @@ const providers: Provider[] = [
     useClass: AccountRepository,
     provide: ACCOUNT_REPOSITORY,
   },
+  {
+    provide: JWT_SERVICE,
+    useClass: JwtService,
+  },
 ];
 
 const entities = [AccountEntity, ReservedUsernameEntity, WorstPasswordEntity];
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([...entities]),
-    PassportModule,
-    JwtModule.register({
-      secret: process.env.JWT_SECRET,
-      signOptions: {
-        expiresIn: process.env.JWT_EXPIRATION_TIME,
-      },
-    }),
-  ],
+  imports: [TypeOrmModule.forFeature([...entities]), PassportModule],
   controllers: [AccountController],
-  providers: [JwtStrategy, ...providers],
+  providers: [...providers],
 })
 export class AccountModule {}

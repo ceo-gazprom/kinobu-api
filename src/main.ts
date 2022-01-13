@@ -5,6 +5,7 @@ import * as helmet from 'helmet';
 import * as RateLimit from 'express-rate-limit';
 import * as compression from 'compression';
 import * as bodyParser from 'body-parser';
+import * as cookieParser from 'cookie-parser';
 import { setupLogLevels, setupSwagger } from './common';
 import { AppModule } from './app.module';
 
@@ -18,6 +19,12 @@ async function bootstrap(): Promise<NestExpressApplication> {
    * @see https://docs.nestjs.com/security/helmet
    */
   app.use(helmet());
+
+  /**
+   * Parse Cookie header and populate req.cookies with an object keyed by the cookie names.
+   * @see https://docs.nestjs.com/techniques/cookies
+   */
+  app.use(cookieParser());
 
   /**
    * To enable CORS
