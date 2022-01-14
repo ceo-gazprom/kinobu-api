@@ -63,7 +63,6 @@
     "@nestjs/cli": "^8.1.5",
     "@nestjs/schematics": "^8.0.5",
     "@nestjs/testing": "^8.2.3",
-    "@types/aws-sdk": "^2.7.0",
     "@types/bcrypt": "^5.0.0",
     "@types/cache-manager-redis-store": "^2.0.1",
     "@types/compression": "^1.7.2",

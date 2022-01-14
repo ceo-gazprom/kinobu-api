@@ -10,13 +10,8 @@ import {
 } from './entities';
 import { AccountRepository } from './account.repository';
 import { AccountController } from './account.controller';
-import {
-  ACCOUNT_SERVICE,
-  JWT_SERVICE,
-  ACCOUNT_REPOSITORY,
-} from './account.constants';
+import { ACCOUNT_SERVICE, ACCOUNT_REPOSITORY } from './account.constants';
 import { AccountService } from './account.service';
-import { JwtService } from './services';
 import { EMAIL_PROVIDER, EmailProvider } from '../email';
 
 const providers: Provider[] = [
@@ -31,10 +26,6 @@ const providers: Provider[] = [
   {
     useClass: AccountRepository,
     provide: ACCOUNT_REPOSITORY,
-  },
-  {
-    provide: JWT_SERVICE,
-    useClass: JwtService,
   },
 ];
 

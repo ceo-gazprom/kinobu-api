@@ -6,12 +6,11 @@ services:
     env_file: .env
     build:
       context: .
-      dockerfile: ./build/dev.dockerfile
+      dockerfile: ./dev.dockerfile
     ports:
       - "3010:3010"
     volumes:
       - .:/usr/src/app
-      - /usr/src/app/node_modules
     restart: always
     command: npm run start:dev
     links:

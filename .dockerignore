@@ -5,9 +5,8 @@
 
 # Build dependencies
 dist
-**/node_modules
+node_modules
 coverage
-**/build
 
 # Environment (contains sensitive data)
 .env
