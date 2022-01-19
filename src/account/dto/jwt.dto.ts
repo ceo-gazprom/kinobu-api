@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import type { IJwtData } from '../../jwt';
+import type { IJwtData } from '../interfaces';
 
 export class JwtDto {
   @ApiProperty({

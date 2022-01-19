@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import type { Repository } from 'typeorm';
 import { AbstractRepository } from '../common';
 import { AccountEntity } from './entities';
-import { IAccountRepository, ICreateAccount } from './interfaces';
+import type { IAccountRepository, ICreateAccount } from './interfaces';
 
 @Injectable()
 export class AccountRepository

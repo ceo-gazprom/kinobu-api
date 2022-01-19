@@ -2,7 +2,7 @@ import type { UpdateResult } from 'typeorm';
 import type { CreateAccountDto, LoginAccountDto } from '../dto';
 import type { AccountEntity } from '../entities';
 import type { ICreateAccount } from './create-account.interface';
-import type { IJwtData } from '../../jwt';
+import type { IJwtData } from './jwt-data.interface';
 
 export interface IAccountService {
   findAccountByLogin(login: string): Promise<AccountEntity | undefined>;

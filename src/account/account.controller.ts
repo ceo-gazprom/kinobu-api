@@ -24,8 +24,7 @@ import {
   UserNotFoundExceptionFilter,
 } from './filters';
 import { ACCOUNT_SERVICE } from './account.constants';
-import { IAccountService } from './interfaces';
-import type { IJwtData } from '../jwt';
+import type { IAccountService, IJwtData } from './interfaces';
 
 @Controller({
   version: '1',

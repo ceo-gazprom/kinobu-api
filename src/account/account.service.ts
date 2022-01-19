@@ -12,8 +12,8 @@ import type {
   IAccountService,
   ICreateAccount,
   IAccountRepository,
+  IJwtData,
 } from './interfaces';
-import type { IJwtData } from '../jwt';
 import { EMAIL_PROVIDER, IEmailProvider } from '../email';
 import {
   ReservedUsernameEntity,
@@ -76,9 +76,9 @@ export class AccountService implements IAccountService {
    * @returns jwt token
    */
   public generateJwtToken(id: number): IJwtData {
-    const payload = { userId: id };
+    const accessToken = this.jwtService.getAccessToken(id);
     return {
-      access_token: this.jwtService.sign(payload),
+      access_token: accessToken,
     };
   }
 
