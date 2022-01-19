@@ -2,6 +2,11 @@ import { Module } from '@nestjs/common';
 import type { Provider } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
+import {
+  ACCOUNT_SERVICE,
+  ACCOUNT_REPOSITORY,
+  JWT_STRATEGY,
+} from './account.constants';
 import { JwtStrategy } from './strategies';
 import {
   AccountEntity,
@@ -10,22 +15,25 @@ import {
 } from './entities';
 import { AccountRepository } from './account.repository';
 import { AccountController } from './account.controller';
-import { ACCOUNT_SERVICE, ACCOUNT_REPOSITORY } from './account.constants';
 import { AccountService } from './account.service';
 import { EMAIL_PROVIDER, EmailProvider } from '../email';
 
 const providers: Provider[] = [
   {
-    useClass: AccountService,
     provide: ACCOUNT_SERVICE,
+    useClass: AccountService,
   },
   {
-    useClass: EmailProvider,
     provide: EMAIL_PROVIDER,
+    useClass: EmailProvider,
   },
   {
-    useClass: AccountRepository,
     provide: ACCOUNT_REPOSITORY,
+    useClass: AccountRepository,
+  },
+  {
+    provide: JWT_STRATEGY,
+    useClass: JwtStrategy,
   },
 ];
 

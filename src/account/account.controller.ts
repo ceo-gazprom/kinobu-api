@@ -25,7 +25,7 @@ import {
 } from './filters';
 import { ACCOUNT_SERVICE } from './account.constants';
 import { IAccountService } from './interfaces';
-import { IJwtData } from './interfaces';
+import type { IJwtData } from '../jwt';
 
 @Controller({
   version: '1',
