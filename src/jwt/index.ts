@@ -1,4 +1,3 @@
 export { JwtModule } from './jwt.module';
-export { JWT_SERVICE } from './jwt.constants';
-export type { IJwtService } from './interfaces';
-export { JwtStrategy } from './jwt.strategy';
+export { JWT_SERVICE, JWT_CONFIG } from './jwt.constants';
+export type { IJwtService, IJwtConfig } from './interfaces';
