@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import type { Provider } from '@nestjs/common';
-import { STORAGE_SERVICE } from './di.constant';
+import { STORAGE_SERVICE } from './storage.constants';
 import { S3StorageService } from './s3';
 
 const providers: Provider[] = [

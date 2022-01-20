@@ -1,6 +1,6 @@
 import { CacheModule, Module } from '@nestjs/common';
 import type { Provider } from '@nestjs/common';
-import { CACHE_MANAGER_PROVIDER } from './di.constant';
+import { CACHE_MANAGER_PROVIDER } from './cache-manager.constants';
 import { CacheManagerProvider } from './cache-manager.provider';
 import { cacheManagerConfig } from './cache-manager.config';
 

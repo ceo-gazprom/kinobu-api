@@ -7,6 +7,4 @@
  * through an interface for more flexibility.
  */
 
-export const JWT_SERVICE = Symbol('JWT_SERVICE');
-export const JWT_CONFIG = Symbol('JWT_CONFIG');
-export const REFRESH_TOKEN_REPOSITORY = Symbol('REFRESH_TOKEN_REPOSITORY');
+export const EMAIL_PROVIDER = Symbol('EMAIL_PROVIDER');

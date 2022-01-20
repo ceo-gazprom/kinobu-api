@@ -1,13 +1,22 @@
 import { Injectable, Inject, Logger } from '@nestjs/common';
 import { sign, verify } from 'jsonwebtoken';
-import { IJwtService, IJwtTokenPayload, IJwtConfig } from './interfaces';
-import { JWT_CONFIG } from './jwt.constants';
+import type {
+  IJwtService,
+  IJwtTokenPayload,
+  IJwtConfig,
+  IRefreshTokenRepository,
+} from './interfaces';
+import { JWT_CONFIG, REFRESH_TOKEN_REPOSITORY } from './jwt.constants';
 
 @Injectable()
 export class JwtService implements IJwtService {
   private readonly logger = new Logger(JwtService.name);
 
-  constructor(@Inject(JWT_CONFIG) private readonly jwtConfig: IJwtConfig) {}
+  constructor(
+    @Inject(JWT_CONFIG) private readonly jwtConfig: IJwtConfig,
+    @Inject(REFRESH_TOKEN_REPOSITORY)
+    private readonly refreshTokenRepository: IRefreshTokenRepository,
+  ) {}
 
   /**
    *

@@ -11,7 +11,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
-import { COMMENT_SERVICE } from './di.constant';
+import { COMMENT_SERVICE } from './comment.constants';
 import { ICommentService } from './interfaces';
 import { CommentDto } from './dto';
 import { JwtAuthGuard } from '../common/guards';
