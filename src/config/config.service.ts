@@ -29,9 +29,9 @@ export class ConfigService implements IConfigService {
 
   /** */
   private getEnvironmentVariable(key: string): string {
-    const envVar = process.env['key'];
-    if (envVar) {
-      this.logger.error(key + ' env var is not exist');
+    const envVar = process.env[key];
+    if (!envVar) {
+      this.logger.error(key + ' environment variable does not exist');
       process.exit(1);
     }
     return <string>envVar;
