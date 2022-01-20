@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, Global } from '@nestjs/common';
 import type { Provider } from '@nestjs/common';
 import { CONFIG_SERVICE } from './config.constants';
 import { ConfigService } from './config.service';
@@ -10,6 +10,7 @@ const providers: Provider[] = [
   },
 ];
 
+@Global()
 @Module({
   providers: [...providers],
   exports: [...providers],

@@ -5,7 +5,7 @@ import { CommentModule } from './comment';
 import { ConfigModule } from './config';
 // import {} from './cron';
 import { DatabaseModule } from './database';
-import { HealthModule } from './health';
+// import { HealthModule } from './health';
 import { JwtModule } from './jwt';
 import { MovieModule } from './movie';
 // import {} from './reviews';

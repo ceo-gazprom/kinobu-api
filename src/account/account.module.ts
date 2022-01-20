@@ -2,12 +2,7 @@ import { Module } from '@nestjs/common';
 import type { Provider } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
-import {
-  ACCOUNT_SERVICE,
-  ACCOUNT_REPOSITORY,
-  JWT_STRATEGY,
-} from './account.constants';
-import { JwtStrategy } from './strategies';
+import { ACCOUNT_SERVICE, ACCOUNT_REPOSITORY } from './account.constants';
 import {
   AccountEntity,
   ReservedUsernameEntity,
@@ -30,10 +25,6 @@ const providers: Provider[] = [
   {
     provide: ACCOUNT_REPOSITORY,
     useClass: AccountRepository,
-  },
-  {
-    provide: JWT_STRATEGY,
-    useClass: JwtStrategy,
   },
 ];
 
