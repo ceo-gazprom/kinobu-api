@@ -75,8 +75,8 @@ export class AccountService implements IAccountService {
    * @param {Number} id - account id
    * @returns jwt token
    */
-  public generateJwtToken(id: number): IJwtData {
-    const accessToken = this.jwtService.getAccessToken(id);
+  public generateJwtToken(accountId: number): IJwtData {
+    const accessToken = this.jwtService.getAccessToken(accountId);
     return {
       access_token: accessToken,
     };

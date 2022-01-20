@@ -40,15 +40,16 @@ export class JwtService implements IJwtService {
    *
    */
   private generateAccessToken(payload: IJwtTokenPayload): string {
+    console.log('уже здесь');
     return sign(payload, this.jwtConfig.jwtAccessTokenSecret, {
-      algorithm: 'RS256',
+      algorithm: 'HS256',
       expiresIn: this.jwtConfig.jwtAccessTokenExpirationTime,
     });
   }
 
   private generateRefreshToken(payload: IJwtTokenPayload): string {
     return sign(payload, this.jwtConfig.jwtRefreshTokenSecret, {
-      algorithm: 'RS256',
+      algorithm: 'HS256',
       expiresIn: this.jwtConfig.jwtRefreshTokenExpirationTime,
     });
   }
