@@ -8,12 +8,12 @@ import {
   HttpStatus,
   Body,
   Param,
-  Res,
+  BadRequestException,
 } from '@nestjs/common';
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
 import { RequestIP } from './decorators';
 import { ResponseErrorDto } from '../common/dto';
-import { LoginAccountDto, CreateAccountDto, AccountDto } from './dto';
+import { LoginAccountDto, CreateAccountDto, AccountDto, JwtDto } from './dto';
 import {
   PasswordSameDataExceptionFilter,
   IncorrectPasswordExceptionFilter,
@@ -45,6 +45,11 @@ export class AccountController {
   @HttpCode(HttpStatus.OK)
   @ApiResponse({
     status: HttpStatus.OK,
+    type: JwtDto,
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    type: UserNotFoundExceptionFilter,
   })
   public async signIn(
     @RequestIP() ip: string,
@@ -69,7 +74,9 @@ export class AccountController {
 
     await this.accountService.updateAccountIp(account.id, ip);
 
-    return this.accountService.generateJwtToken(account.id);
+    const token = this.accountService.generateJwtToken(account.id);
+
+    return JwtDto.fromItem(token);
   }
 
   @Post('sign-up')
