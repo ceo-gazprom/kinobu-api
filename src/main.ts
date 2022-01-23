@@ -50,9 +50,13 @@ async function bootstrap(): Promise<NestExpressApplication> {
    */
   app.useGlobalPipes(
     new ValidationPipe({
-      /** Property not included in the whitelist is automatically stripped from the resulting object */
+      /**
+       * Property not included in the whitelist is automatically stripped from the resulting object
+       */
       whitelist: true,
-      /** Automatically transform payloads to be objects types according to their DTO classes */
+      /**
+       * Automatically transform payloads to be objects types according to their DTO classes
+       */
       transform: true,
     }),
   );
@@ -64,8 +68,14 @@ async function bootstrap(): Promise<NestExpressApplication> {
 
   app.use(
     RateLimit({
-      windowMs: 15 * 60 * 1000, // 15 minutes
-      max: 100, // limit each IP to 100 requests per windowMs
+      /**
+       * 15 minutes
+       */
+      windowMs: 15 * 60 * 1000,
+      /**
+       * Limit each IP to 100 requests per windowMs
+       */
+      max: 100,
     }),
   );
 

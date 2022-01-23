@@ -51,7 +51,7 @@ export class CommentController {
    */
   @Delete(':commentId')
   @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth()
+  @ApiBearerAuth('access-token')
   public async deleteCommentByID(
     @Param('commentId') commentId: number,
   ): Promise<void> {
@@ -64,7 +64,7 @@ export class CommentController {
    */
   @Post('restore/:commentId')
   @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth()
+  @ApiBearerAuth('access-token')
   public async restoreCommentById(
     @Param('commentId') commentId: number,
   ): Promise<CommentDto> {
@@ -76,14 +76,14 @@ export class CommentController {
 
   @Post('access/ban/:userId')
   @HttpCode(HttpStatus.OK)
-  @ApiBearerAuth()
+  @ApiBearerAuth('access-token')
   public async banUser(): Promise<void> {
     return;
   }
 
   @Post('access/unban/:userId')
   @HttpCode(HttpStatus.OK)
-  @ApiBearerAuth()
+  @ApiBearerAuth('access-token')
   public async unbanUser(@Param('userId') userId: number): Promise<void> {
     return;
   }

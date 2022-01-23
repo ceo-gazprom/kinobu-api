@@ -64,7 +64,7 @@ export class MovieController {
 
   @Post()
   @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth()
+  @ApiBearerAuth('access-token')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Create movie' })
   @ApiResponse({
