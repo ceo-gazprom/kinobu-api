@@ -8,29 +8,23 @@ export function setupSwagger(app: INestApplication): void {
     .setVersion(version)
     .addBearerAuth(
       {
-        // I was also testing it without prefix 'Bearer ' before the JWT
-        description: `[just text field] Please enter token in following format: Bearer <JWT>`,
         name: 'Authorization',
-        bearerFormat: 'Bearer', // I`ve tested not to use this field, but the result was the same
+        description: `Please enter token in following format: Bearer <JWT>`,
+        bearerFormat: 'Bearer',
         scheme: 'Bearer',
-        type: 'http', // I`ve attempted type: 'apiKey' too
+        type: 'http',
         in: 'Header',
       },
-      'access-token', // This name here is important for matching up with @ApiBearerAuth() in your controller!
+      /**
+       * This name here is important for matching up with @ApiBearerAuth() in your controller
+       */
+      'access-token',
     )
     .build();
 
   const document = SwaggerModule.createDocument(app, options);
-  SwaggerModule.setup(
-    'documentation',
-    app,
-    document,
-    // {
-    //   swaggerOptions: {
-    //     persistAuthorization: true,
-    //   },
-    // }
-  );
+
+  SwaggerModule.setup('documentation', app, document);
 
   console.info(
     `Documentation: http://localhost:${process.env.API_PORT}/documentation`,
