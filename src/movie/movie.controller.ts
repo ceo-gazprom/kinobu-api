@@ -70,7 +70,7 @@ export class MovieController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Get movie data by id',
-    type: MovieDto,
+    type: CreateMovieDto,
   })
   public async createMovie(
     @Body() createMovieDto: CreateMovieDto,

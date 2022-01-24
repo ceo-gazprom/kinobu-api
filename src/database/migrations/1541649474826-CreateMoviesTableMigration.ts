@@ -25,6 +25,7 @@ export class CreateMoviesTableMigration1541649474826
           {
             name: 'rating',
             type: 'int',
+            default: 0,
           },
           {
             name: 'created_at',

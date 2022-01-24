@@ -30,6 +30,7 @@ export class MovieEntity {
   @Column({
     type: 'int',
     default: 0,
+    nullable: true,
   })
   public rating: number;
 
