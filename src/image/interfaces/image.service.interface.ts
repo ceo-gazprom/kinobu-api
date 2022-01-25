@@ -1,1 +1,3 @@
-export interface IImageService {}
+export interface IImageService {
+  validateMimeType(mimeType: string): boolean;
+}

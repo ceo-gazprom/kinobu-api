@@ -25,6 +25,11 @@ import { IMovieService } from './interfaces';
 import { MovieDto, CreateMovieDto } from './dto';
 import { JwtAuthGuard } from '../common/guards';
 import type { IFileUpload } from '../common/interfaces';
+import {
+  IMAGE_SERVICE,
+  IImageService,
+  ForbiddenMimeTypeFilter,
+} from '../image';
 
 @Controller({
   version: '1',
@@ -34,6 +39,7 @@ import type { IFileUpload } from '../common/interfaces';
 export class MovieController {
   constructor(
     @Inject(MOVIE_SERVICE) private readonly movieService: IMovieService,
+    @Inject(IMAGE_SERVICE) private readonly imageService: IImageService,
   ) {}
 
   @Get('/list')
@@ -84,6 +90,13 @@ export class MovieController {
     @Body() createMovieDto: CreateMovieDto,
   ): Promise<MovieDto> {
     console.log(file, createMovieDto);
+
+    /**
+     * Check if image mime type is not allowed
+     */
+    const mimeValidation = this.imageService.validateMimeType(file.mimetype);
+    if (!mimeValidation) throw new ForbiddenMimeTypeFilter();
+
     const movie = await this.movieService.createMovie(createMovieDto);
     return MovieDto.fromEntity(movie);
   }
