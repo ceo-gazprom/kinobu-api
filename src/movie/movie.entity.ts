@@ -14,14 +14,12 @@ export class MovieEntity {
   public id: number;
 
   @Column({
-    name: 'kp_id',
     type: 'int',
     nullable: true,
   })
   public kpId: number;
 
   @Column({
-    name: 'imdb_id',
     type: 'int',
     nullable: true,
   })
@@ -34,18 +32,22 @@ export class MovieEntity {
   })
   public rating: number;
 
+  @Column({
+    type: 'varchar',
+    length: '128',
+  })
+  public originalName: string;
+
   @CreateDateColumn({
-    name: 'created_at',
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
   })
-  private createdAt: Date;
+  public createdAt: Date;
 
   @UpdateDateColumn({
-    name: 'updated_at',
     type: 'timestamp',
     default: () => 'CURRENT_TIMESTAMP(6)',
     onUpdate: 'CURRENT_TIMESTAMP(6)',
   })
-  private updatedAt: Date;
+  public updatedAt: Date;
 }

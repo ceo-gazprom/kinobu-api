@@ -22,6 +22,11 @@ export class MovieDto {
   })
   rating: number;
 
+  @ApiProperty({
+    example: 'Fight Club',
+  })
+  originalName: string;
+
   static fromEntity(movieEntity: MovieEntity): MovieDto {
     const movie = new MovieDto();
 
@@ -29,6 +34,7 @@ export class MovieDto {
     movie.kpId = movieEntity.kpId;
     movie.imdbId = movieEntity.imdbId;
     movie.rating = movieEntity.rating;
+    movie.originalName = movieEntity.originalName;
 
     return movie;
   }

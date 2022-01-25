@@ -28,6 +28,11 @@ export class CreateMoviesTableMigration1541649474826
             default: 0,
           },
           {
+            name: 'original_name',
+            type: 'varchar',
+            length: '128',
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',

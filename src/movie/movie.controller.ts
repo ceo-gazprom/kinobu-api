@@ -8,18 +8,23 @@ import {
   HttpCode,
   HttpStatus,
   UseGuards,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import {
   ApiTags,
   ApiResponse,
   ApiOperation,
   ApiParam,
   ApiBearerAuth,
+  ApiConsumes,
 } from '@nestjs/swagger';
 import { MOVIE_SERVICE } from './movie.constants';
 import { IMovieService } from './interfaces';
 import { MovieDto, CreateMovieDto } from './dto';
 import { JwtAuthGuard } from '../common/guards';
+import type { IFileUpload } from '../common/interfaces';
 
 @Controller({
   version: '1',
@@ -63,19 +68,22 @@ export class MovieController {
   }
 
   @Post()
-  @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth('access-token')
+  // @UseGuards(JwtAuthGuard)
+  // @ApiBearerAuth('access-token')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Create movie' })
+  @ApiConsumes('multipart/form-data')
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Get movie data by id',
     type: CreateMovieDto,
   })
+  @UseInterceptors(FileInterceptor('file'))
   public async createMovie(
+    @UploadedFile('file') file: IFileUpload,
     @Body() createMovieDto: CreateMovieDto,
   ): Promise<MovieDto> {
-    console.log(createMovieDto);
+    console.log(file, createMovieDto);
     const movie = await this.movieService.createMovie(createMovieDto);
     return MovieDto.fromEntity(movie);
   }

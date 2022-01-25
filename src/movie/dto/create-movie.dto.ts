@@ -21,4 +21,8 @@ export class CreateMovieDto {
   @ApiProperty()
   @IsOptional()
   year: string;
+
+  @ApiProperty({ type: 'string', format: 'binary' })
+  @IsOptional()
+  file: any;
 }
