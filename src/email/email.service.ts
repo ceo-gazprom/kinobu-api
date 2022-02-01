@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { createTransport } from 'nodemailer';
 import type * as Mail from 'nodemailer/lib/mailer';
-import { IEmailService } from './email.service.interface';
+import { IEmailService } from './interfaces/email.service.interface';
 
 @Injectable()
 export class EmailProvider implements IEmailService {
