@@ -7,4 +7,4 @@
  * through an interface for more flexibility.
  */
 
-export const EMAIL_PROVIDER = Symbol('EMAIL_PROVIDER');
+export const EMAIL_SERVICE = Symbol('EMAIL_SERVICE');

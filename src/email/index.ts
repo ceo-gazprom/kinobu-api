@@ -1,3 +1,3 @@
-export { EMAIL_PROVIDER } from './email.constants';
-export { IEmailProvider } from './email-provider.interface';
-export { EmailProvider } from './email.provider';
+export { EmailModule } from './email.module';
+export { EMAIL_SERVICE } from './email.constants';
+export type { IEmailProvider } from './email.service.interface';
