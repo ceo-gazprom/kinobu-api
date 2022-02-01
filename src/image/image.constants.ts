@@ -6,3 +6,8 @@ export const allowImageMimeTypes = [
   'image/png',
   'image/bmp',
 ];
+
+/**
+ * Size in megabytes
+ */
+export const maxImageSize = 10;

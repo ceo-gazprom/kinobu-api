@@ -1,16 +1,14 @@
 import { Module } from '@nestjs/common';
 import type { Provider } from '@nestjs/common';
 import { STORAGE_SERVICE } from './storage.constants';
-import { S3StorageService } from './s3';
+import { StorageService } from './storage.service';
 
 const providers: Provider[] = [
-  {
-    useClass: S3StorageService,
-    provide: STORAGE_SERVICE,
-  },
+  { provide: STORAGE_SERVICE, useClass: StorageService },
 ];
 
 @Module({
   providers: [...providers],
+  exports: [...providers],
 })
 export class StorageModule {}

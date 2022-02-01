@@ -24,11 +24,12 @@ import { MOVIE_SERVICE } from './movie.constants';
 import { IMovieService } from './interfaces';
 import { MovieDto, CreateMovieDto } from './dto';
 import { JwtAuthGuard } from '../common/guards';
-import type { IFileUpload } from '../common/interfaces';
+import type { IBufferedFile } from '../common/interfaces';
 import {
   IMAGE_SERVICE,
   IImageService,
   ForbiddenMimeTypeFilter,
+  ForbiddenImageSizeFilter,
 } from '../image';
 
 @Controller({
@@ -86,7 +87,7 @@ export class MovieController {
   })
   @UseInterceptors(FileInterceptor('file'))
   public async createMovie(
-    @UploadedFile('file') file: IFileUpload,
+    @UploadedFile('file') file: IBufferedFile,
     @Body() createMovieDto: CreateMovieDto,
   ): Promise<MovieDto> {
     console.log(file, createMovieDto);
@@ -94,8 +95,16 @@ export class MovieController {
     /**
      * Check if image mime type is not allowed
      */
-    const mimeValidation = this.imageService.validateMimeType(file.mimetype);
-    if (!mimeValidation) throw new ForbiddenMimeTypeFilter();
+    const imageMimeValidation = this.imageService.validateMimeType(
+      file.mimetype,
+    );
+    if (!imageMimeValidation) throw new ForbiddenMimeTypeFilter();
+
+    /**
+     * Check if the image size is allowed
+     */
+    const imageSizeValidation = this.imageService.validateImageSize(file.size);
+    if (!imageSizeValidation) throw new ForbiddenImageSizeFilter();
 
     const movie = await this.movieService.createMovie(createMovieDto);
     return MovieDto.fromEntity(movie);

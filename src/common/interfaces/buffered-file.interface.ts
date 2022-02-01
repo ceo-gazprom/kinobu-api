@@ -1,7 +1,8 @@
-export interface IFileUpload {
+export interface IBufferedFile {
   fieldname: string;
   originalname: string;
   encoding: string;
   mimetype: string;
   buffer: Buffer;
+  size: number;
 }
