@@ -1,18 +1,21 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { createTransport } from 'nodemailer';
 import type * as Mail from 'nodemailer/lib/mailer';
-import { IEmailService } from './interfaces/email.service.interface';
+import { EMAIL_CONFIG } from './email.constants';
+import { IEmailService, IEmailConfig } from './interfaces';
 
 @Injectable()
 export class EmailProvider implements IEmailService {
   private nodemailerTransport: Mail;
 
-  constructor() {
+  constructor(
+    @Inject(EMAIL_CONFIG) private readonly emailConfig: IEmailConfig,
+  ) {
     this.nodemailerTransport = createTransport({
-      service: process.env.EMAIL_SERVICE,
+      service: this.emailConfig.emailService,
       auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASSWORD,
+        user: this.emailConfig.emailAuthUser,
+        pass: this.emailConfig.emailAuthPassword,
       },
     });
   }

@@ -8,3 +8,4 @@
  */
 
 export const EMAIL_SERVICE = Symbol('EMAIL_SERVICE');
+export const EMAIL_CONFIG = Symbol('EMAIL_CONFIG');

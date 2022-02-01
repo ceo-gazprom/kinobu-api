@@ -1,16 +1,24 @@
 import { Module } from '@nestjs/common';
 import type { Provider } from '@nestjs/common';
-import { EMAIL_SERVICE } from './email.constants';
+import { EMAIL_CONFIG, EMAIL_SERVICE } from './email.constants';
+import { EmailConfig } from './email.config';
 import { EmailProvider } from './email.service';
 
-const providers: Provider[] = [
+const internalProviders: Provider[] = [
+  {
+    provide: EMAIL_CONFIG,
+    useClass: EmailConfig,
+  },
+];
+
+const externalProviders: Provider[] = [
   {
     provide: EMAIL_SERVICE,
     useClass: EmailProvider,
   },
 ];
 @Module({
-  providers: [...providers],
-  exports: [...providers],
+  providers: [...internalProviders, ...externalProviders],
+  exports: [...externalProviders],
 })
 export class EmailModule {}
