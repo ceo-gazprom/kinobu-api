@@ -1,6 +1,7 @@
 import { Injectable, Inject } from '@nestjs/common';
 import type { LogLevel } from '@nestjs/common';
-import { CONFIG_SERVICE, IConfigService } from '../config';
+import { CONFIG_SERVICE } from '../config';
+import type { IConfigService } from '../config';
 import type { ILoggerConfig } from './interfaces';
 
 @Injectable()

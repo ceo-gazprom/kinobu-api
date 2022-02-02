@@ -1,17 +1,29 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Inject, Logger } from '@nestjs/common';
 import { S3 } from 'aws-sdk';
 import type { PutObjectRequest } from 'aws-sdk/clients/s3';
+import type { ConfigurationOptions } from 'aws-sdk/global';
 import { v4 as uuid } from 'uuid';
-import type { IStorageService } from './interfaces';
-import { StorageConfig } from './storage.config';
+import { STORAGE_CONFIG } from './storage.constants';
+import type { IStorageService, IStorageConfig } from './interfaces';
 
 @Injectable()
 export class StorageService implements IStorageService {
   private readonly logger = new Logger(StorageService.name);
   private s3: S3;
 
+  constructor(
+    @Inject(STORAGE_CONFIG) private readonly storageConfig: IStorageConfig,
+  ) {}
+
   private getS3(): S3 {
-    if (!this.s3) this.s3 = new S3(StorageConfig);
+    if (!this.s3) {
+      const options: ConfigurationOptions = {
+        accessKeyId: this.storageConfig.s3AccessKey,
+        secretAccessKey: this.storageConfig.s3SecretKey,
+      };
+
+      this.s3 = new S3(options);
+    }
     return this.s3;
   }
 

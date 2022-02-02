@@ -15,17 +15,13 @@ import {
 import { AccountRepository } from './account.repository';
 import { AccountController } from './account.controller';
 import { AccountService } from './account.service';
-import { EMAIL_PROVIDER, EmailProvider } from '../email';
 import { JwtStrategy } from './strategies';
+import { EmailModule } from '../email';
 
 const providers: Provider[] = [
   {
     provide: ACCOUNT_SERVICE,
     useClass: AccountService,
-  },
-  {
-    provide: EMAIL_PROVIDER,
-    useClass: EmailProvider,
   },
   {
     provide: ACCOUNT_REPOSITORY,
@@ -40,7 +36,11 @@ const providers: Provider[] = [
 const entities = [AccountEntity, ReservedUsernameEntity, WorstPasswordEntity];
 
 @Module({
-  imports: [TypeOrmModule.forFeature([...entities]), PassportModule],
+  imports: [
+    TypeOrmModule.forFeature([...entities]),
+    PassportModule,
+    EmailModule,
+  ],
   controllers: [AccountController],
   providers: [...providers],
 })

@@ -14,7 +14,8 @@ import type {
   IAccountRepository,
   IJwtData,
 } from './interfaces';
-import { EMAIL_PROVIDER, IEmailProvider } from '../email';
+import { EMAIL_SERVICE } from '../email';
+import type { IEmailService } from '../email';
 import {
   ReservedUsernameEntity,
   WorstPasswordEntity,
@@ -27,7 +28,7 @@ import { JWT_SERVICE, IJwtService } from '../jwt';
 export class AccountService implements IAccountService {
   private readonly logger = new Logger(AccountService.name);
   constructor(
-    @Inject(EMAIL_PROVIDER) private readonly emailProvider: IEmailProvider,
+    @Inject(EMAIL_SERVICE) private readonly emailProvider: IEmailService,
     @Inject(JWT_SERVICE) private readonly jwtService: IJwtService,
     @Inject(ACCOUNT_REPOSITORY)
     private readonly accountRepository: IAccountRepository,
