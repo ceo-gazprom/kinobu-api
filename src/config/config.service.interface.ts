@@ -3,7 +3,8 @@ export interface IConfigService {
   isProduction: boolean;
   isTest: boolean;
   nodeEnv: string;
-  getNumber(key: string): number;
-  getBoolean(key: string): boolean;
   getString(key: string): string;
+  getNumber(key: string): number;
+  getOptionalNumber(key: string): number | undefined;
+  getBoolean(key: string): boolean;
 }

@@ -28,13 +28,10 @@ export class ConfigService implements IConfigService {
   }
 
   /** */
-  private getEnvironmentVariable(key: string): string {
-    const envVar = process.env[key];
-    if (!envVar) {
-      this.logger.error(key + ' environment variable does not exist');
-      process.exit(1);
-    }
-    return <string>envVar;
+  public getString(key: string): string {
+    const value = this.getEnvironmentVariable(key);
+
+    return value.replace(/\\n/g, '\n');
   }
 
   /** */
@@ -47,6 +44,26 @@ export class ConfigService implements IConfigService {
       this.logger.error(key + ' environment variable is not a number');
       process.exit(1);
     }
+  }
+
+  /**
+   *
+   * @param key
+   * @returns
+   */
+  public getOptionalNumber(key: string): number | undefined {
+    const value = this.getOptionalEnvironmentVariable(key);
+
+    if (value) {
+      try {
+        return Number(value);
+      } catch {
+        this.logger.error(key + ' environment variable is not a number');
+        process.exit(1);
+      }
+    }
+
+    return undefined;
   }
 
   /** */
@@ -62,9 +79,23 @@ export class ConfigService implements IConfigService {
   }
 
   /** */
-  public getString(key: string): string {
-    const value = this.getEnvironmentVariable(key);
+  private getEnvironmentVariable(key: string): string {
+    const envVar = process.env[key];
+    if (!envVar) {
+      this.logger.error(key + ' environment variable does not exist');
+      process.exit(1);
+    }
+    return <string>envVar;
+  }
 
-    return value.replace(/\\n/g, '\n');
+  /**
+   *
+   * @param key
+   * @returns
+   */
+  private getOptionalEnvironmentVariable(key: string): string | undefined {
+    const envVar = process.env[key];
+    if (!envVar) return undefined;
+    return <string>envVar;
   }
 }

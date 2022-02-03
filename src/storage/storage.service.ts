@@ -1,40 +1,67 @@
 import { Injectable, Inject, Logger } from '@nestjs/common';
 import { S3 } from 'aws-sdk';
 import type { PutObjectRequest } from 'aws-sdk/clients/s3';
-import type { ConfigurationOptions } from 'aws-sdk/global';
+import type { ServiceConfigurationOptions } from 'aws-sdk/lib/service';
 import { v4 as uuid } from 'uuid';
 import { STORAGE_CONFIG } from './storage.constants';
-import type { IStorageService, IStorageConfig } from './interfaces';
+import type {
+  IStorageService,
+  IStorageConfig,
+  IUploadedFile,
+} from './interfaces';
 
 @Injectable()
 export class StorageService implements IStorageService {
+  /**
+   *
+   */
   private readonly logger = new Logger(StorageService.name);
-  private s3: S3;
+
+  /**
+   *
+   */
+  private s3ClientInstance: S3;
+
+  /**
+   *
+   */
+  private readonly defaultPublicBucketName =
+    this.storageConfig.s3PublicBucketName;
 
   constructor(
     @Inject(STORAGE_CONFIG) private readonly storageConfig: IStorageConfig,
   ) {}
 
-  private getS3(): S3 {
-    if (!this.s3) {
-      const options: ConfigurationOptions = {
+  /**
+   *
+   */
+  private get s3Client(): S3 {
+    if (!this.s3ClientInstance) {
+      const options: ServiceConfigurationOptions = {
         accessKeyId: this.storageConfig.s3AccessKey,
         secretAccessKey: this.storageConfig.s3SecretKey,
+        endpoint: this.storageConfig.s3Endpoint,
       };
 
-      this.s3 = new S3(options);
+      this.s3ClientInstance = new S3(options);
     }
-    return this.s3;
+    return this.s3ClientInstance;
   }
 
-  public async uploadFile(
+  /**
+   *
+   * @param file
+   * @param filename
+   * @param bucket
+   * @returns
+   */
+  public async upload(
     file: Buffer,
-    filename?: string,
+    filename: string,
     bucket?: string,
-  ): Promise<void> {
-    const bucketS3 = bucket ? bucket : process.env.S3_DEFAULT_BUCKET;
-    const instanseS3 = this.getS3();
-    const key = filename ? filename : this.generateName();
+  ): Promise<IUploadedFile> {
+    const bucketS3 = bucket ? bucket : this.defaultPublicBucketName;
+    const key = `${uuid()}-${filename}`;
 
     const params: PutObjectRequest = {
       Bucket: bucketS3,
@@ -42,22 +69,11 @@ export class StorageService implements IStorageService {
       Body: file,
     };
 
-    return new Promise((resolve, reject) => {
-      instanseS3.upload(params, (err, data) => {
-        if (err) {
-          Logger.error(err);
-          reject(err.message);
-        }
-        resolve(data);
-      });
-    });
-  }
+    await this.s3Client.upload(params).promise();
 
-  /**
-   *
-   * @returns
-   */
-  private generateName(): string {
-    return uuid();
+    return {
+      host: `${this.storageConfig.s3Endpoint}/${bucket}`,
+      filename: key,
+    };
   }
 }
