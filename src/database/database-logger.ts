@@ -2,7 +2,7 @@ import { Logger as NestLogger } from '@nestjs/common';
 import type { Logger as TypeOrmLogger } from 'typeorm';
 
 export class DatabaseLogger implements TypeOrmLogger {
-  private readonly logger = new NestLogger('SQL');
+  private readonly logger = new NestLogger('TypeORM');
 
   logQuery(query: string, parameters?: unknown[]) {
     this.logger.log(
