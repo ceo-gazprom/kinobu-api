@@ -82,7 +82,7 @@ async function bootstrap(): Promise<NestExpressApplication> {
   /**
    * Turn on the display of documentation if we are in the development environment
    */
-  if (process.env.ENVIRONMENT == 'development') setupSwagger(app);
+  if (process.env.ENVIRONMENT !== 'production') setupSwagger(app);
 
   await app.listen(Number(process.env.API_PORT));
 
