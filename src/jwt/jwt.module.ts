@@ -1,6 +1,7 @@
 import { Module, Global } from '@nestjs/common';
 import type { Provider } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '../config';
 import {
   REFRESH_TOKEN_REPOSITORY,
   JWT_SERVICE,
@@ -31,7 +32,7 @@ const externalProviders: Provider[] = [
 
 @Global()
 @Module({
-  imports: [TypeOrmModule.forFeature([RefreshTokenEntity])],
+  imports: [TypeOrmModule.forFeature([RefreshTokenEntity]), ConfigModule],
   providers: [...internalProviders, ...externalProviders],
   exports: [...externalProviders],
 })

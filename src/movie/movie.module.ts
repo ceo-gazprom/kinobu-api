@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import type { Provider } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '../config';
 import { MovieEntity } from './movie.entity';
 import { MovieController } from './movie.controller';
 import { MOVIE_SERVICE, MOVIE_REPOSITORY } from './movie.constants';
@@ -17,7 +18,7 @@ const providers: Provider[] = [
 ];
 
 @Module({
-  imports: [TypeOrmModule.forFeature([MovieEntity]), ImageModule],
+  imports: [TypeOrmModule.forFeature([MovieEntity]), ConfigModule, ImageModule],
   controllers: [MovieController],
   providers: [...providers],
 })
