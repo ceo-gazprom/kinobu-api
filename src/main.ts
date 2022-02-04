@@ -86,9 +86,9 @@ async function bootstrap(): Promise<NestExpressApplication> {
 
   await app.listen(Number(process.env.API_PORT));
 
-  console.info(`Server running on port ${process.env.API_PORT}`);
-
   return app;
 }
 
-void bootstrap();
+void bootstrap().then(() => {
+  console.info(`Server running on port ${process.env.API_PORT}`);
+});

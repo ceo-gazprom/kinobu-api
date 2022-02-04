@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AccountModule } from './account';
-import {} from './cache-manager';
+import {} from './cache';
 import { CommentModule } from './comment';
 // import {} from './cron';
 import { DatabaseModule } from './database';

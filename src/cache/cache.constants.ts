@@ -7,4 +7,4 @@
  * through an interface for more flexibility.
  */
 
-export const CACHE_MANAGER_PROVIDER = Symbol('CACHE_MANAGER_PROVIDER');
+export const CACHE_SERVICE = Symbol('CACHE_SERVICE');
