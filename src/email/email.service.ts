@@ -25,4 +25,15 @@ export class EmailProvider implements IEmailService {
   public sendMail(options: Mail.Options): Promise<any> {
     return this.nodemailerTransport.sendMail(options);
   }
+
+  // абстракции
+  public sendConfirmCode(recipient: string, code: number): Promise<any> {
+    const options: Mail.Options = {
+      from: 'info@kinobu.ru',
+      to: recipient,
+      text: String(code),
+    };
+
+    return this.nodemailerTransport.sendMail(options);
+  }
 }

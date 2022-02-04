@@ -139,11 +139,7 @@ export class AccountService implements IAccountService {
     createAccountData: ICreateAccount,
   ): Promise<AccountEntity> {
     createAccountData.password = await hash(createAccountData.password, 8);
-    this.emailService.sendMail({
-      from: 'info@kinobu.ru',
-      to: createAccountData.email,
-      text: 'Нужно подтвердить аккаунт',
-    });
+    this.emailService.sendConfirmCode(createAccountData.email, 456098);
     return this.accountRepository.createAccount(createAccountData);
   }
 }

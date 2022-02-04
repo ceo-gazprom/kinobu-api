@@ -10,8 +10,8 @@ import { ApiProperty } from '@nestjs/swagger';
 import { ICreateAccount } from '../interfaces';
 
 export class CreateAccountDto implements ICreateAccount {
+  // todo: добавить исключение русских букв
   @IsEmail()
-  @IsAlphanumeric()
   @ApiProperty({
     required: true,
     example: 'example@example.com',
