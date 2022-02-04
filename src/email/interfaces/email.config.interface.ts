@@ -1,5 +1,6 @@
 export interface IEmailConfig {
-  emailService: string;
+  emailHost: string;
+  emailPort: number | undefined;
   emailAuthUser: string;
   emailAuthPassword: string;
 }

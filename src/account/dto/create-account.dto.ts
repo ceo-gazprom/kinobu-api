@@ -1,9 +1,17 @@
-import { IsOptional, IsEmail, IsNotEmpty } from 'class-validator';
+import {
+  IsOptional,
+  IsEmail,
+  IsAlphanumeric,
+  IsNotEmpty,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { ICreateAccount } from '../interfaces';
 
 export class CreateAccountDto implements ICreateAccount {
   @IsEmail()
+  @IsAlphanumeric()
   @ApiProperty({
     required: true,
     example: 'example@example.com',
@@ -19,6 +27,9 @@ export class CreateAccountDto implements ICreateAccount {
   mobilePhone: string;
 
   @IsNotEmpty()
+  @IsAlphanumeric()
+  @MinLength(5)
+  @MaxLength(50)
   @ApiProperty({
     required: true,
     example: 'username',
@@ -26,6 +37,8 @@ export class CreateAccountDto implements ICreateAccount {
   username: string;
 
   @IsNotEmpty()
+  @MinLength(6)
+  @MaxLength(60)
   @ApiProperty({
     required: true,
     example: '123password',

@@ -8,8 +8,12 @@ export class EmailConfig implements IEmailConfig {
     @Inject(CONFIG_SERVICE) private readonly configService: IConfigService,
   ) {}
 
-  public get emailService(): string {
+  public get emailHost(): string {
     return this.configService.getString('EMAIL_SERVICE');
+  }
+
+  public get emailPort(): number | undefined {
+    return this.configService.getOptionalNumber('EMAIL_PORT');
   }
 
   public get emailAuthUser(): string {

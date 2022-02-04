@@ -12,11 +12,12 @@ export class EmailProvider implements IEmailService {
     @Inject(EMAIL_CONFIG) private readonly emailConfig: IEmailConfig,
   ) {
     this.nodemailerTransport = createTransport({
-      service: this.emailConfig.emailService,
-      auth: {
-        user: this.emailConfig.emailAuthUser,
-        pass: this.emailConfig.emailAuthPassword,
-      },
+      host: this.emailConfig.emailHost,
+      port: this.emailConfig.emailPort,
+      // auth: {
+      //   user: this.emailConfig.emailAuthUser,
+      //   pass: this.emailConfig.emailAuthPassword,
+      // },
     });
   }
 

@@ -28,7 +28,7 @@ import { JWT_SERVICE, IJwtService } from '../jwt';
 export class AccountService implements IAccountService {
   private readonly logger = new Logger(AccountService.name);
   constructor(
-    @Inject(EMAIL_SERVICE) private readonly emailProvider: IEmailService,
+    @Inject(EMAIL_SERVICE) private readonly emailService: IEmailService,
     @Inject(JWT_SERVICE) private readonly jwtService: IJwtService,
     @Inject(ACCOUNT_REPOSITORY)
     private readonly accountRepository: IAccountRepository,
@@ -139,6 +139,11 @@ export class AccountService implements IAccountService {
     createAccountData: ICreateAccount,
   ): Promise<AccountEntity> {
     createAccountData.password = await hash(createAccountData.password, 8);
+    this.emailService.sendMail({
+      from: 'info@kinobu.ru',
+      to: createAccountData.email,
+      text: 'Нужно подтвердить аккаунт',
+    });
     return this.accountRepository.createAccount(createAccountData);
   }
 }
