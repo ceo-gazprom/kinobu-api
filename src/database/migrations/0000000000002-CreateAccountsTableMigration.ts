@@ -1,34 +1,52 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class CreateEmailConfirmCodesTableMigration1541649474828
+export class CreateAccountsTableMigration0000000000002
   implements MigrationInterface
 {
+  private readonly schemaName = 'account';
+  private readonly tableName = 'accounts';
+
   async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'email_confirm_codes',
+        schema: this.schemaName,
+        name: this.tableName,
         columns: [
           {
             name: 'id',
             type: 'int',
             isPrimary: true,
             isGenerated: true,
+            generationStrategy: 'increment',
+          },
+          {
+            name: 'username',
+            type: 'varchar',
+            isUnique: true,
           },
           {
             name: 'email',
             type: 'varchar',
             isUnique: true,
-            isNullable: false,
           },
           {
-            name: 'code',
-            type: 'int',
-            isNullable: false,
+            name: 'phone_number',
+            type: 'varchar',
+            isUnique: true,
+            isNullable: true,
+          },
+          {
+            name: 'password',
+            type: 'varchar',
+          },
+          {
+            name: 'ip',
+            type: 'varchar',
           },
           {
             name: 'confirmed',
-            type: 'boolean',
             default: false,
+            type: 'boolean',
           },
           {
             name: 'created_at',
@@ -46,6 +64,6 @@ export class CreateEmailConfirmCodesTableMigration1541649474828
   }
 
   async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('email_confirm_codes');
+    await queryRunner.dropTable('accounts');
   }
 }

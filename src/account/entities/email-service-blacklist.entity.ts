@@ -1,1 +1,1 @@
-import {} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';

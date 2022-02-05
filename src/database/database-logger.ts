@@ -5,7 +5,7 @@ export class DatabaseLogger implements TypeOrmLogger {
   private readonly logger = new NestLogger('TypeORM');
 
   logQuery(query: string, parameters?: unknown[]) {
-    this.logger.log(
+    this.logger.debug(
       `${query} -- Parameters: ${this.stringifyParameters(parameters)}`,
     );
   }

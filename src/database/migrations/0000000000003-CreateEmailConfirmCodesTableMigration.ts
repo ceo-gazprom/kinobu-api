@@ -1,36 +1,39 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class CreateMoviesTableMigration1541649474826
+export class CreateEmailConfirmCodesTableMigration0000000000003
   implements MigrationInterface
 {
+  private readonly schemaName = 'account';
+  private readonly tableName = 'email_confirm_codes';
+
   async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'movies',
+        schema: this.schemaName,
+        name: this.tableName,
         columns: [
           {
             name: 'id',
             type: 'int',
             isPrimary: true,
             isGenerated: true,
+            generationStrategy: 'increment',
           },
           {
-            name: 'kp_id',
-            type: 'int',
-          },
-          {
-            name: 'imdb_id',
-            type: 'int',
-          },
-          {
-            name: 'rating',
-            type: 'int',
-            default: 0,
-          },
-          {
-            name: 'original_name',
+            name: 'email',
             type: 'varchar',
-            length: '128',
+            isUnique: true,
+            isNullable: false,
+          },
+          {
+            name: 'code',
+            type: 'int',
+            isNullable: false,
+          },
+          {
+            name: 'confirmed',
+            type: 'boolean',
+            default: false,
           },
           {
             name: 'created_at',
@@ -48,6 +51,6 @@ export class CreateMoviesTableMigration1541649474826
   }
 
   async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('movies');
+    await queryRunner.dropTable(this.tableName);
   }
 }

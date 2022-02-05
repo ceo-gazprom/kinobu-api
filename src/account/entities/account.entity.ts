@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 
 @Entity({
+  schema: 'account',
   name: 'accounts',
 })
 export class AccountEntity extends BaseEntity {

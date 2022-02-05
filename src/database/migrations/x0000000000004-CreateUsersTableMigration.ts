@@ -1,12 +1,15 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class CreateAccountsTableMigration1541649474825
+export class CreateUsersTableMigration0000000000004
   implements MigrationInterface
 {
+  private readonly schemaName = 'account';
+  private readonly tableName = 'users';
+
   async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'accounts',
+        name: 'users',
         columns: [
           {
             name: 'id',
@@ -21,28 +24,9 @@ export class CreateAccountsTableMigration1541649474825
             isUnique: true,
           },
           {
-            name: 'email',
-            type: 'varchar',
-            isUnique: true,
-          },
-          {
-            name: 'phone_number',
-            type: 'varchar',
-            isUnique: true,
-            isNullable: true,
-          },
-          {
-            name: 'password',
-            type: 'varchar',
-          },
-          {
-            name: 'ip',
-            type: 'varchar',
-          },
-          {
-            name: 'confirmed',
-            default: false,
-            type: 'boolean',
+            name: 'rating',
+            type: 'int',
+            default: 0,
           },
           {
             name: 'created_at',
@@ -60,6 +44,6 @@ export class CreateAccountsTableMigration1541649474825
   }
 
   async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('accounts');
+    await queryRunner.dropTable('users');
   }
 }

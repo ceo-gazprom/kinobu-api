@@ -8,14 +8,14 @@ import {
 
 @Entity({
   schema: 'account',
-  name: 'email_confirm_codes',
+  name: 'phone_confirm_codes',
 })
-export class EmailConfirmCodeEntity {
+export class PhoneConfirmCodeEntity {
   @PrimaryGeneratedColumn()
   public id: number;
 
   @Column({ unique: true })
-  public email: string;
+  public phone: string;
 
   @Column()
   public code: number;
