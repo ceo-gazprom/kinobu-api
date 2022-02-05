@@ -9,7 +9,7 @@ export class EmailConfig implements IEmailConfig {
   ) {}
 
   public get emailHost(): string {
-    return this.configService.getString('EMAIL_SERVICE');
+    return this.configService.getString('EMAIL_HOST');
   }
 
   public get emailPort(): number | undefined {

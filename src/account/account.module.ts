@@ -5,13 +5,16 @@ import { PassportModule } from '@nestjs/passport';
 import {
   ACCOUNT_SERVICE,
   ACCOUNT_REPOSITORY,
+  EMAIL_CONFIRM_CODE_REPOSITORY,
   JWT_STRATEGY,
 } from './account.constants';
 import {
   AccountEntity,
+  EmailConfirmCodeEntity,
   ReservedUsernameEntity,
   WorstPasswordEntity,
 } from './entities';
+import { EmailConfirmCodeRepository } from './repositories';
 import { AccountRepository } from './account.repository';
 import { AccountController } from './account.controller';
 import { AccountService } from './account.service';
@@ -28,12 +31,21 @@ const providers: Provider[] = [
     useClass: AccountRepository,
   },
   {
+    provide: EMAIL_CONFIRM_CODE_REPOSITORY,
+    useClass: EmailConfirmCodeRepository,
+  },
+  {
     provide: JWT_STRATEGY,
     useClass: JwtStrategy,
   },
 ];
 
-const entities = [AccountEntity, ReservedUsernameEntity, WorstPasswordEntity];
+const entities = [
+  AccountEntity,
+  EmailConfirmCodeEntity,
+  ReservedUsernameEntity,
+  WorstPasswordEntity,
+];
 
 @Module({
   imports: [

@@ -7,12 +7,14 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import type { Repository, UpdateResult } from 'typeorm';
+import { Transactional } from 'typeorm-transactional-cls-hooked';
 import { hash, compare } from 'bcrypt';
 import type {
   IAccountService,
   ICreateAccount,
   IAccountRepository,
   IJwtData,
+  IEmailConfirmCodeRepository,
 } from './interfaces';
 import { EMAIL_SERVICE } from '../email';
 import type { IEmailService } from '../email';
@@ -22,7 +24,10 @@ import {
   AccountEntity,
 } from './entities';
 import type { CreateAccountDto, LoginAccountDto } from './dto';
-import { ACCOUNT_REPOSITORY } from './account.constants';
+import {
+  ACCOUNT_REPOSITORY,
+  EMAIL_CONFIRM_CODE_REPOSITORY,
+} from './account.constants';
 import { JWT_SERVICE, IJwtService } from '../jwt';
 @Injectable()
 export class AccountService implements IAccountService {
@@ -32,6 +37,8 @@ export class AccountService implements IAccountService {
     @Inject(JWT_SERVICE) private readonly jwtService: IJwtService,
     @Inject(ACCOUNT_REPOSITORY)
     private readonly accountRepository: IAccountRepository,
+    @Inject(EMAIL_CONFIRM_CODE_REPOSITORY)
+    private readonly emailConfirmCodeRepository: IEmailConfirmCodeRepository,
     @InjectRepository(ReservedUsernameEntity)
     private reservedUsernameRepository: Repository<ReservedUsernameEntity>,
     @InjectRepository(WorstPasswordEntity)
@@ -135,11 +142,31 @@ export class AccountService implements IAccountService {
   /**
    *
    */
+  @Transactional()
   public async createAccount(
     createAccountData: ICreateAccount,
   ): Promise<AccountEntity> {
+    /**
+     *
+     */
     createAccountData.password = await hash(createAccountData.password, 8);
-    this.emailService.sendConfirmCode(createAccountData.email, 456098);
-    return this.accountRepository.createAccount(createAccountData);
+    const account = await this.accountRepository.create(createAccountData);
+
+    /**
+     *
+     */
+    const confirmCode = this.generateConfirmCode();
+    await this.emailConfirmCodeRepository.create({
+      email: createAccountData.email,
+      code: confirmCode,
+    });
+
+    this.emailService.sendConfirmCode(createAccountData.email, confirmCode);
+
+    return account;
+  }
+
+  private generateConfirmCode(): number {
+    return Math.floor(Math.random() * 1000000);
   }
 }

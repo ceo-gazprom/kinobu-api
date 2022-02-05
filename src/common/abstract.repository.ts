@@ -4,7 +4,7 @@ import {
   Repository,
   SelectQueryBuilder,
 } from 'typeorm';
-import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
+import type { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import { IAbstractRepository } from './interfaces';
 
 /**

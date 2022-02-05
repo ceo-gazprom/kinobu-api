@@ -1,6 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import type { NestExpressApplication } from '@nestjs/platform-express';
+import {
+  initializeTransactionalContext,
+  patchTypeORMRepositoryWithBaseRepository,
+} from 'typeorm-transactional-cls-hooked';
 import * as helmet from 'helmet';
 import * as RateLimit from 'express-rate-limit';
 import * as compression from 'compression';
@@ -10,6 +14,23 @@ import { setupLogLevels, setupSwagger } from './common';
 import { AppModule } from './app.module';
 
 async function bootstrap(): Promise<NestExpressApplication> {
+  /**
+   * A transactional method for typeorm that uses cls-hooked to handle and propagate
+   * transactions between different repositories and service methods.
+   * ! first need to initialize the cls-hooked namespace before application is started
+   * @see https://github.com/odavid/typeorm-transactional-cls-hooked
+   */
+  initializeTransactionalContext();
+  /**
+   * Patch the original Repository with the BaseRepository.
+   * By doing so, you will be able to use the original Repository and not change the code
+   * or use BaseRepository.
+   */
+  patchTypeORMRepositoryWithBaseRepository();
+
+  /**
+   *
+   */
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     logger: setupLogLevels(process.env.NODE_ENV === 'production'),
   });
