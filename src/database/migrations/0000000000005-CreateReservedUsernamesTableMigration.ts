@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class CreateEmailConfirmCodesTableMigration0000000000003
+export class CreateReservedUsernamesTableMigration0000000000005
   implements MigrationInterface
 {
   private readonly schemaName = 'account';

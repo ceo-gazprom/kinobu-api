@@ -1,15 +1,12 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class CreateUsersTableMigration0000000000004
+export class CreateMoviesTableMigration0000000000006
   implements MigrationInterface
 {
-  private readonly schemaName = 'account';
-  private readonly tableName = 'users';
-
   async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'users',
+        name: 'movies',
         columns: [
           {
             name: 'id',
@@ -19,14 +16,22 @@ export class CreateUsersTableMigration0000000000004
             generationStrategy: 'increment',
           },
           {
-            name: 'username',
-            type: 'varchar',
-            isUnique: true,
+            name: 'kp_id',
+            type: 'int',
+          },
+          {
+            name: 'imdb_id',
+            type: 'int',
           },
           {
             name: 'rating',
             type: 'int',
             default: 0,
+          },
+          {
+            name: 'original_name',
+            type: 'varchar',
+            length: '128',
           },
           {
             name: 'created_at',
@@ -44,6 +49,6 @@ export class CreateUsersTableMigration0000000000004
   }
 
   async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('users');
+    await queryRunner.dropTable('movies');
   }
 }

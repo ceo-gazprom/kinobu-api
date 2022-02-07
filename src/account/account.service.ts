@@ -133,6 +133,14 @@ export class AccountService implements IAccountService {
     return accountValues.includes(password);
   }
 
+  public async checkPasswordIsCorrect(
+    accountId: number,
+    password: string,
+  ): Promise<boolean> {
+    const account = await this.accountRepository.findOneById(accountId);
+    return account?.password === password ? true : false;
+  }
+
   // public checkPasswordValidate(password: string): Promise<string[]> {
   //   const reasons = [];
   //   // проверить в плохихи паролях
@@ -164,6 +172,13 @@ export class AccountService implements IAccountService {
     this.emailService.sendConfirmCode(createAccountData.email, confirmCode);
 
     return account;
+  }
+
+  public async updatePassword(
+    accountId: number,
+    password: string,
+  ): Promise<UpdateResult> {
+    return this.accountRepository.updateById(accountId, { password });
   }
 
   private generateConfirmCode(): number {

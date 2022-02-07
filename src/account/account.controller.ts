@@ -9,11 +9,19 @@ import {
   Body,
   Param,
   BadRequestException,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiTags, ApiResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { RequestIP } from './decorators';
+import { JwtAuthGuard } from '../common/guards';
 import { ResponseErrorDto } from '../common/dto';
-import { LoginAccountDto, CreateAccountDto, AccountDto, JwtDto } from './dto';
+import {
+  AccountDto,
+  ChangePasswordAccountDto,
+  CreateAccountDto,
+  JwtDto,
+  LoginAccountDto,
+} from './dto';
 import {
   PasswordSameDataExceptionFilter,
   IncorrectPasswordExceptionFilter,
@@ -177,4 +185,31 @@ export class AccountController {
   //     return result;
   // }
   //   }
+
+  @Post('change-password')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth('access-token')
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Password changed successfully',
+  })
+  public async changePassword(
+    @Body() changePasswordAccountDto: ChangePasswordAccountDto,
+  ): Promise<void> {
+    /**
+     * Verify that the old password is correct for the specified id
+     */
+    const checkResult = this.accountService.checkPasswordIsCorrect(
+      changePasswordAccountDto.id,
+      changePasswordAccountDto.oldPassword,
+    );
+
+    if (!checkResult) throw new BadRequestException();
+
+    await this.accountService.updatePassword(
+      changePasswordAccountDto.id,
+      changePasswordAccountDto.newPassword,
+    );
+  }
 }
