@@ -136,6 +136,7 @@ export class AccountController {
     const newAccount = await this.accountService.createAccount(
       createAccountData,
     );
+
     return AccountDto.fromEntity(newAccount);
   }
 

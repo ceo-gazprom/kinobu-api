@@ -7,21 +7,24 @@ import { UserController } from './user.controller';
 import { UserService } from './user.service';
 import { USER_SERVICE, USER_REPOSITORY } from './user.constants';
 
-const providers: Provider[] = [
-  {
-    useClass: UserService,
-    provide: USER_SERVICE,
-  },
+const internalProviders: Provider[] = [
   {
     provide: USER_REPOSITORY,
     useClass: UserRepository,
   },
 ];
 
+const externalProviders: Provider[] = [
+  {
+    useClass: UserService,
+    provide: USER_SERVICE,
+  },
+];
+
 @Module({
   imports: [TypeOrmModule.forFeature([UserEntity])],
   controllers: [UserController],
-  providers: [...providers],
-  exports: [...providers],
+  providers: [...internalProviders, ...externalProviders],
+  exports: [...externalProviders],
 })
 export class UserModule {}
