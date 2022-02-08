@@ -11,6 +11,7 @@ import { ICreateAccount } from '../interfaces';
 
 export class CreateAccountDto implements ICreateAccount {
   // todo: добавить исключение русских букв
+  // todo: привести к нижнему регистру
   @IsEmail()
   @ApiProperty({
     required: true,

@@ -38,11 +38,7 @@ export class AccountService implements IAccountService {
     @Inject(ACCOUNT_REPOSITORY)
     private readonly accountRepository: IAccountRepository,
     @Inject(EMAIL_CONFIRM_CODE_REPOSITORY)
-    private readonly emailConfirmCodeRepository: IEmailConfirmCodeRepository,
-    @InjectRepository(ReservedUsernameEntity)
-    private reservedUsernameRepository: Repository<ReservedUsernameEntity>,
-    @InjectRepository(WorstPasswordEntity)
-    private worstPasswordRepository: Repository<WorstPasswordEntity>,
+    private readonly emailConfirmCodeRepository: IEmailConfirmCodeRepository, // @InjectRepository(ReservedUsernameEntity) // private reservedUsernameRepository: Repository<ReservedUsernameEntity>, // @InjectRepository(WorstPasswordEntity) // private worstPasswordRepository: Repository<WorstPasswordEntity>,
   ) {}
 
   /**
