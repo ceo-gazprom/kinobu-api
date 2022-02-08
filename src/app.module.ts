@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { AccountModule } from './account';
 import {} from './cache';
 import { CommentModule } from './comment';
+import { CronModule } from './cron';
 // import {} from './cron';
 import { DatabaseModule } from './database';
 // import { HealthModule } from './health';
@@ -15,6 +16,7 @@ import { UserModule } from './user';
   imports: [
     AccountModule,
     CommentModule,
+    CronModule,
     DatabaseModule,
     // HealthModule,
     JwtModule,
