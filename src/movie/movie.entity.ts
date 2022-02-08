@@ -1,18 +1,10 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Entity, Column } from 'typeorm';
+import { AbstractEntity } from '../common';
 
 @Entity({
   name: 'movies',
 })
-export class MovieEntity {
-  @PrimaryGeneratedColumn()
-  public id: number;
-
+export class MovieEntity extends AbstractEntity {
   @Column({
     type: 'int',
     nullable: true,
@@ -37,17 +29,4 @@ export class MovieEntity {
     length: '128',
   })
   public originalName: string;
-
-  @CreateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-  })
-  public createdAt: Date;
-
-  @UpdateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-    onUpdate: 'CURRENT_TIMESTAMP(6)',
-  })
-  public updatedAt: Date;
 }

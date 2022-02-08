@@ -1,12 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, Column } from 'typeorm';
+import { AbstractEntity } from '../../common';
 
 @Entity({
   name: 'worst_passwords',
 })
-export class WorstPasswordEntity {
-  @PrimaryGeneratedColumn()
-  public id: number;
-
+export class WorstPasswordEntity extends AbstractEntity {
   @Column({ unique: true })
   public password: string;
 }

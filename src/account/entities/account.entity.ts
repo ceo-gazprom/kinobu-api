@@ -1,20 +1,11 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-  UpdateDateColumn,
-  BaseEntity,
-} from 'typeorm';
+import { Entity, Column } from 'typeorm';
+import { AbstractEntity } from '../../common';
 
 @Entity({
   schema: 'account',
   name: 'accounts',
 })
-export class AccountEntity extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  public id: number;
-
+export class AccountEntity extends AbstractEntity {
   @Column({ unique: true })
   public username: string;
 
@@ -31,12 +22,6 @@ export class AccountEntity extends BaseEntity {
 
   @Column()
   public ip: string;
-
-  @CreateDateColumn()
-  public createdAt: Date;
-
-  @UpdateDateColumn()
-  public updatedAt: Date;
 
   @Column({
     default: false,

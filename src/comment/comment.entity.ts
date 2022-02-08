@@ -1,22 +1,12 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Entity, Column } from 'typeorm';
+import { AbstractEntity } from '../common';
 import { MediaType } from './types';
 
 @Entity({
   name: 'comments',
 })
-export class CommentEntity {
-  @PrimaryGeneratedColumn()
-  public id: number;
-
-  @Column({
-    name: 'user_id',
-  })
+export class CommentEntity extends AbstractEntity {
+  @Column()
   public userId: number;
 
   @Column()
@@ -25,39 +15,18 @@ export class CommentEntity {
   @Column()
   public text: string;
 
-  @Column({
-    name: 'contain_spoiler',
-  })
+  @Column()
   public containSpoiler: boolean;
 
   @Column()
   public banned: boolean;
 
-  @Column({
-    name: 'reason_ban',
-  })
+  @Column()
   public reasonBan: string;
 
-  @Column({
-    name: 'moderator_id',
-  })
+  @Column()
   public moderatorId: string;
 
   @Column()
   public deleted: boolean;
-
-  @CreateDateColumn({
-    name: 'created_at',
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-  })
-  createdAt: Date;
-
-  @UpdateDateColumn({
-    name: 'updated_at',
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-    onUpdate: 'CURRENT_TIMESTAMP(6)',
-  })
-  updatedAt: Date;
 }

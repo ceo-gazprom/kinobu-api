@@ -1,19 +1,11 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Entity, Column } from 'typeorm';
+import { AbstractEntity } from '../../common';
 
 @Entity({
   schema: 'account',
   name: 'email_confirm_codes',
 })
-export class EmailConfirmCodeEntity {
-  @PrimaryGeneratedColumn()
-  public id: number;
-
+export class EmailConfirmCodeEntity extends AbstractEntity {
   @Column({ unique: true })
   public email: string;
 
@@ -24,17 +16,4 @@ export class EmailConfirmCodeEntity {
     default: false,
   })
   public confirmed: boolean;
-
-  @CreateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-  })
-  createdAt: Date;
-
-  @UpdateDateColumn({
-    type: 'timestamp',
-    default: () => 'CURRENT_TIMESTAMP(6)',
-    onUpdate: 'CURRENT_TIMESTAMP(6)',
-  })
-  updatedAt: Date;
 }
