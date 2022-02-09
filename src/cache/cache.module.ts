@@ -1,18 +1,28 @@
-import { CacheModule as NestCacheModule, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import type { Provider } from '@nestjs/common';
-import { CACHE_SERVICE } from './cache.constants';
+import * as cacheManager from 'cache-manager';
+import { ConfigModule } from '../config';
+import { CACHE_CONFIG, CACHE_SERVICE } from './cache.constants';
+import { CacheConfig } from './cache.config';
 import { CacheService } from './cache.service';
-import { cacheConfig } from './cache.config';
 
-const providers: Provider[] = [
+const internalProviders: Provider[] = [
   {
-    useClass: CacheService,
+    provide: CACHE_CONFIG,
+    useClass: CacheConfig,
+  },
+];
+
+const externalProviders: Provider[] = [
+  {
     provide: CACHE_SERVICE,
+    useClass: CacheService,
   },
 ];
 
 @Module({
-  imports: [NestCacheModule.register(cacheConfig)],
-  providers: [...providers],
+  imports: [ConfigModule],
+  providers: [...internalProviders, ...externalProviders],
+  exports: [...externalProviders],
 })
 export class CacheModule {}

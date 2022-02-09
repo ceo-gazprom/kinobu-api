@@ -8,3 +8,5 @@
  */
 
 export const CACHE_SERVICE = Symbol('CACHE_SERVICE');
+export const CACHE_CONFIG = Symbol('CACHE_CONFIG');
+export const CACHE_DRIVER = Symbol('CACHE_DRIVER');
