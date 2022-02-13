@@ -1,3 +1,9 @@
+/**
+ * @file Cache interceptor
+ * @module cache/decorator
+ * @author Robert Wacker <https://github.com/yuwacker>
+ */
+
 import { Injectable, Inject } from '@nestjs/common';
 import type {
   CallHandler,
@@ -6,17 +12,27 @@ import type {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import type { Observable, of, tap } from 'rxjs';
-import { CACHE_CONFIG, CACHE_DRIVER } from '../cache.constants';
-import type { ICacheConfig, ICacheDriver } from '../interfaces';
+import { CACHE_CONFIG, CACHE_SERVICE } from '../cache.constants';
+import type { ICacheConfig, ICacheService } from '../interfaces';
 
+/**
+ * 
+ */
 @Injectable()
 export class CacheInterceptor implements NestInterceptor {
+
   constructor(
     @Inject(CACHE_CONFIG) private readonly cacheConfig: ICacheConfig,
-    @Inject(CACHE_DRIVER) private readonly cacheDriver: ICacheDriver,
+    @Inject(CACHE_SERVICE) private readonly cacheDriver: ICacheService,
     @Inject(Reflector.name) private readonly reflector: Reflector,
   ) {}
 
+  /**
+   * 
+   * @param context 
+   * @param next 
+   * @returns 
+   */
   async intercept(
     context: ExecutionContext,
     next: CallHandler,
