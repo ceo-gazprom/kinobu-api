@@ -1,6 +1,12 @@
+/**
+ * @file App module
+ * @module app/module
+ * @author Robert Wacker <https://github.com/yuwacker>
+ */
+
 import { Module } from '@nestjs/common';
 import { AccountModule } from './account';
-import {} from './cache';
+// import {} from './cache';
 import { CommentModule } from './comment';
 import { CronModule } from './cron';
 // import {} from './cron';
