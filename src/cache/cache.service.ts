@@ -1,28 +1,42 @@
-import { Injectable, Inject, CACHE_MANAGER } from '@nestjs/common';
-import type { Cache } from 'cache-manager';
-import type { ICacheService } from './interfaces';
+import { Injectable, Inject } from '@nestjs/common';
+import { CACHE_DRIVER } from './cache.constants';
+import type { ICacheDriver, ICacheService } from './interfaces';
 
+/**
+ *
+ */
 @Injectable()
 export class CacheService implements ICacheService {
-  constructor(@Inject(CACHE_MANAGER) private readonly cache: Cache) {}
+  /**
+   *
+   * @param cacheDriver
+   */
+  constructor(
+    @Inject(CACHE_DRIVER) private readonly cacheDriver: ICacheDriver,
+  ) {}
 
+  /**
+   *
+   * @param key
+   * @returns
+   */
   public get(key: string): Promise<string | undefined> {
-    return this.cache.get<string>(key);
+    return this.cacheDriver.get<string>(key);
   }
 
+  /**
+   *
+   * @param key
+   * @param value
+   * @returns
+   */
   public set(key: string, value: string): Promise<string> {
-    return this.cache.set(key, value);
+    return this.cacheDriver.set(key, value);
   }
 
+  /**
+   *
+   * @param key
+   */
   public del(key: string): Promise<string> {}
 }
-
-// import type { CacheModuleOptions } from '@nestjs/common';
-// import * as redisStore from 'cache-manager-redis-store';
-
-// export const cacheConfig: CacheModuleOptions = {
-//   store: redisStore,
-//   host: process.env.REDIS_HOST,
-//   port: process.env.REDIS_PORT,
-//   defaultTtl: process.env.REDIS_DEFAULT_TTL,
-// };
