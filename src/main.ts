@@ -1,3 +1,9 @@
+/**
+ * @file App entry
+ * @module app/main
+ * @author Robert Wacker <https://github.com/yuwacker>
+ */
+
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import type { NestExpressApplication } from '@nestjs/platform-express';
@@ -5,11 +11,11 @@ import {
   initializeTransactionalContext,
   patchTypeORMRepositoryWithBaseRepository,
 } from 'typeorm-transactional-cls-hooked';
-import * as helmet from 'helmet';
-import * as RateLimit from 'express-rate-limit';
-import * as compression from 'compression';
-import * as bodyParser from 'body-parser';
-import * as cookieParser from 'cookie-parser';
+import helmet from 'helmet';
+import RateLimit from 'express-rate-limit';
+import compression from 'compression';
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 import { setupLogLevels, setupSwagger } from './common';
 import { AppModule } from './app.module';
 
