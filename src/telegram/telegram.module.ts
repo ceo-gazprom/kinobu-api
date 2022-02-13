@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import type { Provider } from '@nestjs/common';
+import { HttpModule } from '@nestjs/axios';
 import { ConfigModule } from '../config';
 import { TELEGRAM_CONFIG, TELEGRAM_SERVICE } from './telegram.constants';
 import { TelegramConfig } from './telegram.config';
@@ -20,7 +21,7 @@ const externalProviders: Provider[] = [
 ];
 
 @Module({
-  imports: [ConfigModule],
+  imports: [ConfigModule, HttpModule],
   providers: [...internalProviders, ...externalProviders],
   exports: [...externalProviders],
 })
