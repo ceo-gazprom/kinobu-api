@@ -14,12 +14,11 @@ import { Reflector } from '@nestjs/core';
 import { of, tap } from 'rxjs';
 import type { Observable } from 'rxjs';
 import {
-  CACHE_CONFIG,
   CACHE_KEY_METADATA,
   CACHE_SERVICE,
   CACHE_TTL_METADATA,
 } from '../cache.constants';
-import type { ICacheConfig, ICacheService } from '../interfaces';
+import type { ICacheService } from '../interfaces';
 
 /**
  *
@@ -35,7 +34,6 @@ export class CacheInterceptor implements NestInterceptor {
    * @param reflector -
    */
   constructor(
-    @Inject(CACHE_CONFIG) private readonly cacheConfig: ICacheConfig,
     @Inject(CACHE_SERVICE) private readonly cacheService: ICacheService,
     @Inject(Reflector.name) private readonly reflector: Reflector,
   ) {}

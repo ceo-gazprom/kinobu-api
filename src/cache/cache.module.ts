@@ -11,19 +11,16 @@ const internalProviders: Provider[] = [
     provide: CACHE_DRIVER,
     useClass: RedisDriver,
   },
+  {
+    provide: CACHE_CONFIG,
+    useClass: CacheConfig,
+  },
 ];
 
 const externalProviders: Provider[] = [
   {
     provide: CACHE_SERVICE,
     useClass: CacheService,
-  },
-  /**
-   * Нужен, чтобы использовать интерсептор в декораторе в других модулях
-   */
-  {
-    provide: CACHE_CONFIG,
-    useClass: CacheConfig,
   },
 ];
 
