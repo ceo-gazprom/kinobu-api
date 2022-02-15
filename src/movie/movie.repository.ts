@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import type { Repository } from 'typeorm';
 import { AbstractRepository } from '../common';
 import { MovieEntity } from './movie.entity';
-import { IMovieRepository } from './interfaces';
+import type { IMovieRepository } from './interfaces';
 
 @Injectable()
 export class MovieRepository

@@ -21,7 +21,7 @@ export class CacheService implements ICacheService {
    * @returns
    */
   public get(key: string): Promise<string | undefined> {
-    return this.cacheDriver.get<string>(key);
+    return this.cacheDriver.get(key);
   }
 
   /**
@@ -30,7 +30,7 @@ export class CacheService implements ICacheService {
    * @param value
    * @returns
    */
-  public set(key: string, value: string): Promise<string> {
+  public set(key: string, value: string): Promise<void> {
     return this.cacheDriver.set(key, value);
   }
 
@@ -38,5 +38,5 @@ export class CacheService implements ICacheService {
    *
    * @param key
    */
-  public del(key: string): Promise<string> {}
+  // public del(key: string): Promise<string> {}
 }

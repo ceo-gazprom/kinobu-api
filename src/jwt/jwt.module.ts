@@ -12,6 +12,9 @@ import { RefreshTokenRepository } from './repositories';
 import { JwtService } from './jwt.service';
 import { JwtConfig } from './jwt.config';
 
+/**
+ * Internal providers that will not be used in other modules
+ */
 const internalProviders: Provider[] = [
   {
     provide: REFRESH_TOKEN_REPOSITORY,

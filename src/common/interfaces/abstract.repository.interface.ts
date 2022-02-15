@@ -1,5 +1,5 @@
 import type { SelectQueryBuilder, DeleteResult, UpdateResult } from 'typeorm';
-import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
+import type { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 
 export interface IAbstractRepository<T> {
   queryBuilder(alias?: string | undefined): SelectQueryBuilder<T>;

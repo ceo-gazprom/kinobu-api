@@ -5,7 +5,6 @@ import {
   Post,
   Param,
   Body,
-  HttpCode,
   HttpStatus,
   UseGuards,
   UseInterceptors,
@@ -31,6 +30,7 @@ import {
   ForbiddenMimeTypeFilter,
   ForbiddenImageSizeFilter,
 } from '../image';
+import { Cacheable } from '../cache';
 
 @Controller({
   version: '1',
@@ -44,7 +44,7 @@ export class MovieController {
   ) {}
 
   @Get('/list')
-  @HttpCode(HttpStatus.OK)
+  @Cacheable()
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Get movies list',
@@ -56,7 +56,6 @@ export class MovieController {
   }
 
   @Get('/:movieId')
-  @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Get movie by id' })
   @ApiParam({
     name: 'movieId',
@@ -77,9 +76,9 @@ export class MovieController {
   @Post()
   // @UseGuards(JwtAuthGuard)
   // @ApiBearerAuth('access-token')
-  @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Create movie' })
   @ApiConsumes('multipart/form-data')
+  // Todo: поправить респонс
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Get movie data by id',

@@ -31,8 +31,7 @@ export class ImageService implements IImageService {
     const size = imageSize / Math.pow(1024, 2);
     console.log('size ->>>', size);
 
-    if (size < maxImageSize) return true;
-    return false;
+    return size < maxImageSize ? true : false;
   }
 
   /**

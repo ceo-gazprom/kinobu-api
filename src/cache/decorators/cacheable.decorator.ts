@@ -1,6 +1,8 @@
-import { applyDecorators } from '@nestjs/common';
+import { UseInterceptors } from '@nestjs/common';
+import { CacheInterceptor } from '../interceptors';
 
-// key, ttl ? default ttl
-export function Cachable(key: string, ttl?: number): applyDecorators {
-
-}
+/**
+ *
+ * @returns
+ */
+export const Cacheable = () => UseInterceptors(CacheInterceptor);
