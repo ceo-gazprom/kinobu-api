@@ -11,8 +11,14 @@ import type {
   NestInterceptor,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import type { Observable, of, tap } from 'rxjs';
-import { CACHE_CONFIG, CACHE_SERVICE } from '../cache.constants';
+import { of, tap } from 'rxjs';
+import type { Observable } from 'rxjs';
+import {
+  CACHE_CONFIG,
+  CACHE_KEY_METADATA,
+  CACHE_SERVICE,
+  CACHE_TTL_METADATA,
+} from '../cache.constants';
 import type { ICacheConfig, ICacheService } from '../interfaces';
 
 /**
@@ -22,6 +28,8 @@ import type { ICacheConfig, ICacheService } from '../interfaces';
 export class CacheInterceptor implements NestInterceptor {
   private logger = new Logger(CacheInterceptor.name);
 
+  protected allowedMethods = ['GET'];
+
   /**
    * @constructor
    * @param cacheConfig -
@@ -30,7 +38,7 @@ export class CacheInterceptor implements NestInterceptor {
    */
   constructor(
     @Inject(CACHE_CONFIG) private readonly cacheConfig: ICacheConfig,
-    @Inject(CACHE_SERVICE) private readonly cacheDriver: ICacheService,
+    @Inject(CACHE_SERVICE) private readonly cacheService: ICacheService,
     @Inject(Reflector.name) private readonly reflector: Reflector,
   ) {}
 
@@ -50,41 +58,38 @@ export class CacheInterceptor implements NestInterceptor {
      * Получаем request по http пртаколу
      */
     const request = context.switchToHttp().getRequest();
-    /**
-     * Получаем переданные аргументы
-     */
-    const condition = await this.reflector.get(
-      CACHE_COND_METADATA,
-      context.getHandler(),
-    );
 
-    if (typeof condition === 'function' && !condition(context))
-      return next.handle();
-    if (request.method !== 'GET') return next.handle();
+    /**
+     * Если метод отличается от get то не применяется декоратор
+     */
+    if (!this.allowedMethods.includes(request.method)) return next.handle();
+
+    const cacheKey =
+      this.reflector.get<string>(CACHE_KEY_METADATA, context.getHandler()) ||
+      request.url;
 
     /**
      * Получаем данные из кэша
      */
-    const value = await this.cacheDriver.get(cacheKey);
+    const value = await this.cacheService.get(cacheKey);
 
     /**
      * Узнаем время жизни кэша
      */
     const ttl =
-      typeof ttlValueOrFactory === 'function'
-        ? await ttlValueOrFactory(context)
-        : ttlValueOrFactory || 0;
+      this.reflector.get(CACHE_TTL_METADATA, context.getHandler()) ?? null;
 
     if (value !== undefined) {
       return of(value);
     } else {
-      return next.handle().pipe(
-        tap(
-          async (response) =>
-            await this.cacheManager.set(cacheKey, await response, {
-              ttl: ttl
-            })
-        )
-      );
+      return next
+        .handle()
+        .pipe(
+          tap(
+            async (response) =>
+              await this.cacheService.set(cacheKey, await response, ttl),
+          ),
+        );
+    }
   }
 }

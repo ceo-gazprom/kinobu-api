@@ -30,7 +30,7 @@ export class CacheService implements ICacheService {
    * @param value
    * @returns
    */
-  public set(key: string, value: string): Promise<void> {
+  public set(key: string, value: string, ttl?: number): Promise<void> {
     return this.cacheDriver.set(key, value);
   }
 
