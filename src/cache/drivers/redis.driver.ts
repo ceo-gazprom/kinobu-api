@@ -14,6 +14,7 @@ export class RedisDriver implements ICacheDriver {
     this.client = new IORedis({
       host: this.cacheConfig.host,
       port: this.cacheConfig.port,
+      db: this.cacheConfig.databse,
     });
   }
 
@@ -23,7 +24,8 @@ export class RedisDriver implements ICacheDriver {
    */
   public async get(key: string): Promise<any> {
     const value = await this.client.get(key);
-    if (!value) return null;
+
+    if (!value) return undefined;
     try {
       return JSON.parse(value);
     } catch (e) {
@@ -35,18 +37,15 @@ export class RedisDriver implements ICacheDriver {
    * Store the value with the passed key
    * @param key
    * @param value
-   * @param ttlInSec
+   * @param ttl
    */
   public async set(
     key: string,
     value: Record<string, any> | string,
-    ttlInSec?: number,
+    ttl?: number,
   ): Promise<void> {
-    if (ttlInSec) {
-      await this.client.set(key, JSON.stringify(value), 'EX', ttlInSec);
-    }
-
-    await this.client.set(key, JSON.stringify(value));
+    const cacheTtl = ttl ? ttl : this.cacheConfig.defaultTtl;
+    await this.client.set(key, JSON.stringify(value), 'EX', cacheTtl);
   }
 
   /**

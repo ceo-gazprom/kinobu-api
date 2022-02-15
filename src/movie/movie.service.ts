@@ -16,9 +16,6 @@ export class MovieService implements IMovieService {
     private readonly movieRepository: IMovieRepository,
   ) {}
 
-  /**
-   *
-   */
   public getMoviesList(): Promise<MovieEntity[]> {
     return this.movieRepository.findAll();
   }

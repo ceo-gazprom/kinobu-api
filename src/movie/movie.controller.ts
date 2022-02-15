@@ -30,7 +30,7 @@ import {
   ForbiddenMimeTypeFilter,
   ForbiddenImageSizeFilter,
 } from '../image';
-import { Cacheable } from '../cache';
+import { Cacheable, CacheTtlSeconds } from '../cache';
 
 @Controller({
   version: '1',
@@ -44,7 +44,7 @@ export class MovieController {
   ) {}
 
   @Get('/list')
-  @Cacheable()
+  @Cacheable('movies-list', CacheTtlSeconds.ONE_MINUTE)
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Get movies list',

@@ -3,7 +3,9 @@ import type { Provider } from '@nestjs/common';
 import { ScheduleModule } from '@nestjs/schedule';
 import { DiactivatedConfirmCodesJob } from './jobs';
 
-const jobs: Provider[] = [DiactivatedConfirmCodesJob];
+const jobs: Provider[] = [
+  // DiactivatedConfirmCodesJob
+];
 @Module({
   imports: [ScheduleModule.forRoot()],
   providers: [...jobs],

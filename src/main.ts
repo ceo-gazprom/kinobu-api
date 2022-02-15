@@ -13,9 +13,9 @@ import {
 } from 'typeorm-transactional-cls-hooked';
 import helmet from 'helmet';
 import RateLimit from 'express-rate-limit';
-import compression from 'compression';
-import bodyParser from 'body-parser';
-import cookieParser from 'cookie-parser';
+import * as compression from 'compression';
+import * as bodyParser from 'body-parser';
+import * as cookieParser from 'cookie-parser';
 import { setupLogLevels, setupSwagger } from './common';
 import { AppModule } from './app.module';
 

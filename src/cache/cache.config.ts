@@ -17,6 +17,10 @@ export class CacheConfig implements ICacheConfig {
     return this.configService.getNumber('REDIS_PORT');
   }
 
+  public get databse(): number {
+    return this.configService.getNumber('REDIS_DATABASE');
+  }
+
   /**
    * @description The default expiration time of the cache.
    */

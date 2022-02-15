@@ -4,7 +4,7 @@
  * @author Robert Wacker <https://github.com/yuwacker>
  */
 
-import { Injectable, Inject, Logger } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import type {
   CallHandler,
   ExecutionContext,
@@ -26,8 +26,6 @@ import type { ICacheConfig, ICacheService } from '../interfaces';
  */
 @Injectable()
 export class CacheInterceptor implements NestInterceptor {
-  private logger = new Logger(CacheInterceptor.name);
-
   protected allowedMethods = ['GET'];
 
   /**

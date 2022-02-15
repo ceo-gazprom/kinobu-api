@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, Logger } from '@nestjs/common';
 import { CACHE_DRIVER } from './cache.constants';
 import type { ICacheDriver, ICacheService } from './interfaces';
 
@@ -7,6 +7,7 @@ import type { ICacheDriver, ICacheService } from './interfaces';
  */
 @Injectable()
 export class CacheService implements ICacheService {
+  private logger = new Logger(CacheService.name);
   /**
    *
    * @param cacheDriver
@@ -31,7 +32,7 @@ export class CacheService implements ICacheService {
    * @returns
    */
   public set(key: string, value: string, ttl?: number): Promise<void> {
-    return this.cacheDriver.set(key, value);
+    return this.cacheDriver.set(key, value, ttl);
   }
 
   /**
