@@ -4,12 +4,12 @@ import { IPage } from '../interfaces';
 
 export class PageDto<T> implements IPage<T> {
   @ApiProperty({ isArray: true })
-  readonly data: T[];
+  readonly data: T;
 
-  @ApiProperty()
+  @ApiProperty({ type: () => PageMetaDto })
   readonly meta: PageMetaDto;
 
-  constructor(data: T[], meta: PageMetaDto) {
+  constructor(data: T, meta: PageMetaDto) {
     this.data = data;
     this.meta = meta;
   }

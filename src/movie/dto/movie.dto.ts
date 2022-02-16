@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { MovieEntity } from '../movie.entity';
+import { IMovieEntity } from '../interfaces';
 
 export class MovieDto {
   @ApiProperty({
@@ -27,15 +27,11 @@ export class MovieDto {
   })
   originalName: string;
 
-  static fromEntity(movieEntity: MovieEntity): MovieDto {
-    const movie = new MovieDto();
-
-    movie.id = movieEntity.id;
-    movie.kpId = movieEntity.kpId;
-    movie.imdbId = movieEntity.imdbId;
-    movie.rating = movieEntity.rating;
-    movie.originalName = movieEntity.originalName;
-
-    return movie;
+  constructor(movieEntity: IMovieEntity) {
+    this.id = movieEntity.id;
+    this.kpId = movieEntity.kpId;
+    this.imdbId = movieEntity.imdbId;
+    this.rating = movieEntity.rating;
+    this.originalName = movieEntity.originalName;
   }
 }

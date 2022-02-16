@@ -3,7 +3,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import type { Repository } from 'typeorm';
 import { AbstractRepository } from '../common';
 import { MovieEntity } from './movie.entity';
+import type { IMovieEntity } from './interfaces';
 import type { IMovieRepository } from './interfaces';
+import type { IPage } from '../common/interfaces';
+import type { IPageOptions } from '../common/interfaces';
 
 @Injectable()
 export class MovieRepository
@@ -16,6 +19,4 @@ export class MovieRepository
   ) {
     super(movieRepository);
   }
-
-  public findByFilters(take?: number, skip?: number): Promise<> {}
 }

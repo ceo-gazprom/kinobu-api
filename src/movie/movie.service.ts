@@ -1,9 +1,9 @@
 import { Injectable, Inject, Logger } from '@nestjs/common';
 import { IMovieService, IMovieRepository } from './interfaces';
 import { MOVIE_REPOSITORY } from './movie.constants';
-import type { MovieEntity } from './movie.entity';
-import type { CreateMovieDto, MovieDto } from './dto';
-import { PageDto } from '../common/dto';
+import type { IMovieEntity } from './interfaces';
+import type { CreateMovieDto } from './dto';
+import type { IPage } from '../common/interfaces';
 
 @Injectable()
 export class MovieService implements IMovieService {
@@ -17,8 +17,8 @@ export class MovieService implements IMovieService {
     private readonly movieRepository: IMovieRepository,
   ) {}
 
-  public getMoviesList(): Promise<PageDto<MovieDto>> {
-    return this.movieRepository.findAll();
+  public getMoviesList(): Promise<IPage<IMovieEntity[]>> {
+    return this.movieRepository.findPaginate({});
   }
 
   /**
@@ -26,14 +26,14 @@ export class MovieService implements IMovieService {
    * @param {Number} id
    * @returns entity or error
    */
-  public getById(id: number): Promise<MovieEntity> {
+  public getById(id: number): Promise<IMovieEntity> {
     return this.movieRepository.findOneByIdOrFail(id);
   }
 
   /**
    *
    */
-  public createMovie(CreateMovieDto: CreateMovieDto): Promise<MovieEntity> {
+  public createMovie(CreateMovieDto: CreateMovieDto): Promise<IMovieEntity> {
     return this.movieRepository.create(CreateMovieDto);
   }
 }

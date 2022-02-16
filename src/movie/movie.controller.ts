@@ -31,6 +31,8 @@ import {
   ForbiddenImageSizeFilter,
 } from '../image';
 import { Cacheable, CacheTtlSeconds } from '../cache';
+import { PageDto, PageMetaDto } from '../common/dto';
+import { ApiPaginatedResponse } from '../common/decorators';
 
 @Controller({
   version: '1',
@@ -45,14 +47,16 @@ export class MovieController {
 
   @Get('/list')
   @Cacheable('movies-list', CacheTtlSeconds.ONE_MINUTE)
-  @ApiResponse({
-    status: HttpStatus.OK,
-    description: 'Get movies list',
-    type: [MovieDto],
-  })
-  public async getMoviesList(): Promise<MovieDto[]> {
+  @ApiPaginatedResponse(MovieDto)
+  public async getMoviesList(): Promise<PageDto<MovieDto[]>> {
     const movies = await this.movieService.getMoviesList();
-    return movies.map((movie) => MovieDto.fromEntity(movie));
+
+    const data = movies.data.map((movie) => new MovieDto(movie));
+
+    /** Pagination meta for a list of items */
+    const meta = new PageMetaDto(movies.meta);
+
+    return new PageDto(data, meta);
   }
 
   @Get('/:movieId')
@@ -70,7 +74,7 @@ export class MovieController {
     @Param('movieId') movieId: number,
   ): Promise<MovieDto> {
     const movie = await this.movieService.getById(movieId);
-    return MovieDto.fromEntity(movie);
+    return new MovieDto(movie);
   }
 
   @Post()
@@ -106,6 +110,6 @@ export class MovieController {
     if (!imageSizeValidation) throw new ForbiddenImageSizeFilter();
 
     const movie = await this.movieService.createMovie(createMovieDto);
-    return MovieDto.fromEntity(movie);
+    return new MovieDto(movie);
   }
 }

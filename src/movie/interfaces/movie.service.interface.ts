@@ -1,8 +1,9 @@
-import type { MovieEntity } from '../movie.entity';
+import type { IMovieEntity } from '../interfaces';
+import type { IPage } from '../../common/interfaces';
 import type { CreateMovieDto } from '../dto';
 
 export interface IMovieService {
-  getMoviesList(): Promise<MovieEntity[]>;
-  getById(id: number): Promise<MovieEntity>;
-  createMovie(movieData: CreateMovieDto): Promise<MovieEntity>;
+  getMoviesList(): Promise<IPage<IMovieEntity[]>>;
+  getById(id: number): Promise<IMovieEntity>;
+  createMovie(movieData: CreateMovieDto): Promise<IMovieEntity>;
 }

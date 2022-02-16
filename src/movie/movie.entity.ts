@@ -1,10 +1,10 @@
 import { Entity, Column } from 'typeorm';
 import { AbstractEntity } from '../common';
-
+import type { IMovieEntity } from './interfaces';
 @Entity({
   name: 'movies',
 })
-export class MovieEntity extends AbstractEntity {
+export class MovieEntity extends AbstractEntity implements IMovieEntity {
   @Column({
     type: 'int',
     nullable: true,

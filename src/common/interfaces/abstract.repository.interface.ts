@@ -1,27 +1,36 @@
 import type { SelectQueryBuilder, DeleteResult, UpdateResult } from 'typeorm';
 import type { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
+import type { IPage } from './pagination';
+import type { SortCondition } from '../types';
 
-export interface IAbstractRepository<T> {
-  queryBuilder(alias?: string | undefined): SelectQueryBuilder<T>;
+export interface IAbstractRepository<Entity> {
+  queryBuilder(alias?: string | undefined): SelectQueryBuilder<Entity>;
 
-  create(data: T | any): Promise<T>;
+  create(data: Entity | any): Promise<Entity>;
 
   updateById(
     id: number,
-    partialEntity: QueryDeepPartialEntity<T>,
+    partialEntity: QueryDeepPartialEntity<Entity>,
   ): Promise<UpdateResult>;
 
-  findOneById(id: number): Promise<T | undefined>;
+  findOneById(id: number): Promise<Entity | undefined>;
 
-  findOneByCondition(filterCondition: any): Promise<T | undefined>;
+  findOneByCondition(filterCondition: any): Promise<Entity | undefined>;
 
-  findByCondition(filterCondition: any): Promise<T[] | undefined>;
+  findByCondition(filterCondition: any): Promise<Entity[] | undefined>;
 
-  findAll(): Promise<T[]>;
+  findAll(): Promise<Entity[]>;
 
   remove(id: string): Promise<DeleteResult>;
 
-  findWithRelations(relations: any): Promise<T[]>;
+  findWithRelations(relations: any): Promise<Entity[]>;
 
-  findOneByIdOrFail(id: number): Promise<T>;
+  findOneByIdOrFail(id: number): Promise<Entity>;
+
+  findPaginate<K>(
+    filterCondition: K,
+    take?: number,
+    skip?: number,
+    sortCondition?: SortCondition<Entity>,
+  ): Promise<IPage<Entity[]>>;
 }
