@@ -2,7 +2,8 @@ import { Injectable, Inject, Logger } from '@nestjs/common';
 import { IMovieService, IMovieRepository } from './interfaces';
 import { MOVIE_REPOSITORY } from './movie.constants';
 import type { MovieEntity } from './movie.entity';
-import type { CreateMovieDto } from './dto';
+import type { CreateMovieDto, MovieDto } from './dto';
+import { PageDto } from '../common/dto';
 
 @Injectable()
 export class MovieService implements IMovieService {
@@ -16,7 +17,7 @@ export class MovieService implements IMovieService {
     private readonly movieRepository: IMovieRepository,
   ) {}
 
-  public getMoviesList(): Promise<MovieEntity[]> {
+  public getMoviesList(): Promise<PageDto<MovieDto>> {
     return this.movieRepository.findAll();
   }
 

@@ -16,4 +16,6 @@ export class MovieRepository
   ) {
     super(movieRepository);
   }
+
+  public findByFilters(take?: number, skip?: number): Promise<> {}
 }
