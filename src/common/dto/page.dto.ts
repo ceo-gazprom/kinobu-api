@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { PageMetaDto } from './page-meta.dto';
-import { IPage } from '../interfaces';
+import type { IPage } from '../interfaces';
 
 export class PageDto<T> implements IPage<T> {
   @ApiProperty({ isArray: true })

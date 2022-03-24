@@ -1,4 +1,4 @@
-export class IPageMeta {
+export interface IPageMeta {
   page: number;
   take: number;
   itemCount: number;

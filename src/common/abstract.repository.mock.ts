@@ -9,34 +9,10 @@ import type { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialE
 import type { IAbstractRepository, IPage, IPageMeta } from './interfaces';
 import type { SortCondition } from './types';
 
-/**
- * Abstract Repository
- *
- * @description This class is an abstract class for all custom repositories.
- * An additional layer of abstraction helps to bring the general functionality
- * of custom repositories into one file.
- * And hide access to the basic functions of the repository from typeorm
- * or extend some of them.
- */
-export abstract class AbstractRepository<Entity>
+export abstract class AbstractRepositoryMock<Entity>
   implements IAbstractRepository<Entity>
 {
-  /**
-   * Number of rows for pagination by default
-   */
-  private readonly defaultTake = 10;
-  /**
-   * Indent rows when sorting in default pagination
-   */
-  private readonly defaultSkip = 0;
-  /**
-   * Sort type in default pagination
-   */
-  private readonly defaultSortType = 'ASC';
-  /**
-   * Sort field in default pagination
-   */
-  private readonly defaultSortField = 'id';
+
 
   constructor(private entity: Repository<Entity>) {}
 

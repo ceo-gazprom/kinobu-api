@@ -1,4 +1,4 @@
 import type { IAbstractRepository } from '../../common/interfaces';
-import type { MovieEntity } from '../movie.entity';
+import type { IMovieEntity } from './movie.entity.interface';
 
-export type IMovieRepository = IAbstractRepository<MovieEntity>;
+export type IMovieRepository = IAbstractRepository<IMovieEntity>;

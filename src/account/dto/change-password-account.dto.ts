@@ -7,7 +7,7 @@ export class ChangePasswordAccountDto {
   @ApiProperty({
     example: 1,
   })
-  id: number;
+  accountId: number;
 
   @MinLength(6)
   @MaxLength(60)
