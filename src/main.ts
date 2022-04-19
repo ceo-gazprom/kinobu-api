@@ -19,7 +19,7 @@ import * as cookieParser from 'cookie-parser';
 import { setupLogLevels, setupSwagger } from './common';
 import { AppModule } from './app.module';
 
-async function bootstrap(): Promise<NestExpressApplication> {
+export async function bootstrap(): Promise<NestExpressApplication> {
   /**
    * A transactional method for typeorm that uses cls-hooked to handle and propagate
    * transactions between different repositories and service methods.

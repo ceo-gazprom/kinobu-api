@@ -1,6 +1,5 @@
 /**
  * DI constants
- * @author Robert Wacker
  *
  * @description Contains tokens for injection providers in the module,
  * controllers and services. Allows DI services to be used

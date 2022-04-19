@@ -201,14 +201,14 @@ export class AccountController {
      * Verify that the old password is correct for the specified id
      */
     const checkResult = this.accountService.checkPasswordIsCorrect(
-      changePasswordAccountDto.id,
+      changePasswordAccountDto.accountId,
       changePasswordAccountDto.oldPassword,
     );
 
     if (!checkResult) throw new BadRequestException();
 
     await this.accountService.updatePassword(
-      changePasswordAccountDto.id,
+      changePasswordAccountDto.accountId,
       changePasswordAccountDto.newPassword,
     );
   }

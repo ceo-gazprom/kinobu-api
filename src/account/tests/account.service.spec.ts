@@ -1,4 +1,6 @@
 import { Test } from '@nestjs/testing';
+import type { TestingModule } from '@nestjs/testing';
+import { suite, test } from '@testdeck/jest';
 import { EMAIL_SERVICE } from '../../email';
 import { JWT_SERVICE } from '../../jwt';
 import { AccountService } from '../account.service';
@@ -7,12 +9,12 @@ import {
   EMAIL_CONFIRM_CODE_REPOSITORY,
 } from '../account.constants';
 
-describe('The account service', () => {
-  let accountService: AccountService;
 
-  /** Init test module */
-  beforeEach(async () => {
-    const module = await Test.createTestingModule({
+abstract class TestSuiteBaseWithContainer {
+  public static container: TestingModule;
+
+  static async beforeAll() {
+    this.container = await Test.createTestingModule({
       providers: [
         AccountService,
         {
@@ -41,9 +43,16 @@ describe('The account service', () => {
         },
       ],
     }).compile();
+  }
+}
 
-    accountService = await module.get(AccountService);
-  });
+@suite
+class ConcreteTestSuite extends TestSuiteBaseWithContainer {
+  async before() {
+    this.accountService = TestSuiteBaseWithContainer.container.get<AccountService>(AccountService);
+    // ...
+  }
+}
 
   describe('when accessing the data of authenticating user', () => {
     it('should attempt to get the user by email', async () => {
