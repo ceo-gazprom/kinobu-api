@@ -2,7 +2,7 @@ import { Injectable, Inject, Logger } from '@nestjs/common';
 import { IMovieService, IMovieRepository } from './interfaces';
 import { MOVIE_REPOSITORY } from './movie.constants';
 import type { IMovieEntity } from './interfaces';
-import type { CreateMovieDto } from './dto';
+import type { CreateMovieDto } from './dtos';
 import type { IPage } from '../common/interfaces';
 
 @Injectable()

@@ -1,7 +1,7 @@
 import { Entity, Column } from 'typeorm';
 import { AbstractEntity } from '../../common';
 import type { IAccountEntity } from '../interfaces';
-import { RoleType } from '../types/role-type.enum';
+import { RoleType } from '../../common/types/role-type.enum';
 
 @Entity({
   schema: 'account',
@@ -31,6 +31,8 @@ export class AccountEntity extends AbstractEntity implements IAccountEntity {
   public confirmed: boolean;
 
   @Column({
+    type: 'enum',
+    enum: RoleType,
     default: RoleType.USER,
   })
   public role: RoleType;

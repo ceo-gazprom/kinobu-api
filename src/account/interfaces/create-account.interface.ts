@@ -1,7 +1,6 @@
 export interface ICreateAccount {
   email: string;
-  mobilePhone: string;
+  phoneNumber: string;
   username: string;
   password: string;
-  ip?: string;
 }

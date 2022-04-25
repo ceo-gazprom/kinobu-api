@@ -8,8 +8,8 @@ import type { IAbstractEntity } from './interfaces';
 
 @Entity()
 export abstract class AbstractEntity implements IAbstractEntity {
-  @PrimaryGeneratedColumn()
-  public id: number;
+  @PrimaryGeneratedColumn('uuid')
+  public id: string;
 
   @CreateDateColumn({
     type: 'timestamp',

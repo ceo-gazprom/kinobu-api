@@ -21,7 +21,7 @@ import {
 } from '@nestjs/swagger';
 import { MOVIE_SERVICE } from './movie.constants';
 import { IMovieService } from './interfaces';
-import { MovieDto, CreateMovieDto } from './dto';
+import { MovieDto, CreateMovieDto } from './dtos';
 import { JwtAuthGuard } from '../common/guards';
 import type { IBufferedFile } from '../common/interfaces';
 import {
@@ -31,7 +31,7 @@ import {
   ForbiddenImageSizeFilter,
 } from '../image';
 import { Cacheable, CacheTtlSeconds } from '../cache';
-import { PageDto, PageMetaDto } from '../common/dto';
+import { PageDto, PageMetaDto } from '../common/dtos';
 import { ApiPaginatedResponse } from '../common/decorators';
 
 @Controller({

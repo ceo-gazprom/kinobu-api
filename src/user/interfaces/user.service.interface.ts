@@ -1,5 +1,5 @@
 import { UserEntity } from '../entities/user.entity';
-import { CreateUserDto } from '../dto';
+import { CreateUserDto } from '../dtos';
 
 export interface IUserService {
   getByEmail(email: string): Promise<UserEntity | undefined>;

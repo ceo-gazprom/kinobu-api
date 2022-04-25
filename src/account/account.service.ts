@@ -1,44 +1,29 @@
-import {
-  Injectable,
-  Inject,
-  HttpException,
-  HttpStatus,
-  Logger,
-} from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import type { Repository, UpdateResult } from 'typeorm';
+import { Injectable, Inject, Logger } from '@nestjs/common';
+import type { UpdateResult } from 'typeorm';
 import { Transactional } from 'typeorm-transactional-cls-hooked';
 import { hash, compare } from 'bcrypt';
+import DeviceDectector from 'device-detector-js';
+import type { DeviceDetectorResult } from 'device-detector-js';
 import type {
   IAccountService,
   ICreateAccount,
   IAccountRepository,
-  IJwtData,
-  IEmailConfirmCodeRepository,
 } from './interfaces';
-import { EMAIL_SERVICE } from '../email';
-import type { IEmailService } from '../email';
-import {
-  ReservedUsernameEntity,
-  WorstPasswordEntity,
-  AccountEntity,
-} from './entities';
-import type { CreateAccountDto, LoginAccountDto } from './dto';
-import {
-  ACCOUNT_REPOSITORY,
-  EMAIL_CONFIRM_CODE_REPOSITORY,
-} from './account.constants';
-import { JWT_SERVICE, IJwtService } from '../jwt';
+import { AccountEntity } from './entities';
+import { ACCOUNT_REPOSITORY } from './account.constants';
+
 @Injectable()
 export class AccountService implements IAccountService {
   private readonly logger = new Logger(AccountService.name);
+  /**
+   * Device detector will parse any user agent and detect the browser,
+   * operating system, device used.
+   */
+  // private readonly deviceDetector = new DeviceDectector();
+
   constructor(
-    @Inject(EMAIL_SERVICE) private readonly emailService: IEmailService,
-    @Inject(JWT_SERVICE) private readonly jwtService: IJwtService,
     @Inject(ACCOUNT_REPOSITORY)
-    private readonly accountRepository: IAccountRepository,
-    @Inject(EMAIL_CONFIRM_CODE_REPOSITORY)
-    private readonly emailConfirmCodeRepository: IEmailConfirmCodeRepository, // @InjectRepository(ReservedUsernameEntity) // private reservedUsernameRepository: Repository<ReservedUsernameEntity>, // @InjectRepository(WorstPasswordEntity) // private worstPasswordRepository: Repository<WorstPasswordEntity>,
+    private readonly accountRepository: IAccountRepository, //@InjectRepository(ReservedUsernameEntity) // private reservedUsernameRepository: Repository<ReservedUsernameEntity>, // @InjectRepository(WorstPasswordEntity) // private worstPasswordRepository: Repository<WorstPasswordEntity>,
   ) {}
 
   /**
@@ -75,18 +60,6 @@ export class AccountService implements IAccountService {
   }
 
   /**
-   *
-   * @param {Number} id - account id
-   * @returns jwt token
-   */
-  public generateJwtToken(accountId: number): IJwtData {
-    const accessToken = this.jwtService.getAccessToken(accountId);
-    return {
-      access_token: accessToken,
-    };
-  }
-
-  /**
    * Check if such username is being used by another user
    * Todo: попробывать переписать проверки и сделать проверку данных за один запрос к БД
    */
@@ -118,17 +91,6 @@ export class AccountService implements IAccountService {
     return result ? true : false;
   }
 
-  /**
-   * Check if the password matches other account data
-   */
-  public checkPasswordMatchAccountData(
-    createAccountDto: CreateAccountDto,
-  ): boolean {
-    const { password, ...accountData } = createAccountDto;
-    const accountValues = Object.values(accountData);
-    return accountValues.includes(password);
-  }
-
   public async checkPasswordIsCorrect(
     accountId: number,
     password: string,
@@ -154,20 +116,7 @@ export class AccountService implements IAccountService {
      *
      */
     createAccountData.password = await hash(createAccountData.password, 8);
-    const account = await this.accountRepository.create(createAccountData);
-
-    /**
-     *
-     */
-    const confirmCode = this.generateConfirmCode();
-    await this.emailConfirmCodeRepository.create({
-      email: createAccountData.email,
-      code: confirmCode,
-    });
-
-    this.emailService.sendConfirmCode(createAccountData.email, confirmCode);
-
-    return account;
+    return await this.accountRepository.create(createAccountData);
   }
 
   public async updatePassword(
@@ -177,7 +126,17 @@ export class AccountService implements IAccountService {
     return this.accountRepository.updateById(accountId, { password });
   }
 
-  private generateConfirmCode(): number {
-    return Math.floor(Math.random() * 1000000);
+  public async setCurrentRefreshToken(refreshToken: string, accountId: number) {
+    const currentHashedRefreshToken = await hash(refreshToken, 10);
+
+    // await this.accountRepository.
+
+    // update(accountId, {
+    //   currentHashedRefreshToken,
+    // });
   }
+
+  // private pasreUserAgent(userAgent: string): DeviceDetectorResult {
+  //   return this.deviceDetector.parse(userAgent);
+  // }
 }

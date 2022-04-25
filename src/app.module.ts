@@ -1,11 +1,6 @@
-/**
- * @file App module
- * @module app/module
- * @author Robert Wacker <https://github.com/yuwacker>
- */
-
 import { Module } from '@nestjs/common';
 import { AccountModule } from './account';
+import { AuthModule } from './auth';
 // import {} from './cache';
 import { CommentModule } from './comment';
 import { CronModule } from './cron';
@@ -15,19 +10,20 @@ import { DatabaseModule } from './database';
 import { JwtModule } from './jwt';
 import { MovieModule } from './movie';
 // import {} from './reviews';
-import { StorageModule } from './storage';
+import { SignupModule } from './signup';
 import { UserModule } from './user';
 
 @Module({
   imports: [
     AccountModule,
+    AuthModule,
     CommentModule,
     CronModule,
     DatabaseModule,
     // HealthModule,
     JwtModule,
     MovieModule,
-    StorageModule,
+    SignupModule,
     UserModule,
   ],
 })

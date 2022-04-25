@@ -1,15 +1,8 @@
-import {
-  Controller,
-  Inject,
-  Get,
-  Param,
-  HttpStatus,
-  HttpCode,
-} from '@nestjs/common';
+import { Controller, Inject, Get, Param, HttpStatus } from '@nestjs/common';
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
 import { USER_SERVICE } from './user.constants';
 import { IUserService } from './interfaces';
-import { UserDto } from './dto';
+import { UserDto } from './dtos';
 import { UserNotFoundExceptionFilter } from './filters';
 
 @Controller({
@@ -23,7 +16,6 @@ export class UserController {
   ) {}
 
   @Get(':userId')
-  @HttpCode(HttpStatus.OK)
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Get user data by user id',

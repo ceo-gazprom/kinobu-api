@@ -2,58 +2,32 @@ import { Module } from '@nestjs/common';
 import type { Provider } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
-import {
-  ACCOUNT_SERVICE,
-  ACCOUNT_REPOSITORY,
-  EMAIL_CONFIRM_CODE_REPOSITORY,
-  JWT_STRATEGY,
-} from './account.constants';
-import {
-  AccountEntity,
-  EmailConfirmCodeEntity,
-  ReservedUsernameEntity,
-  WorstPasswordEntity,
-} from './entities';
-import { EmailConfirmCodeRepository } from './repositories';
+import { ACCOUNT_SERVICE, ACCOUNT_REPOSITORY } from './account.constants';
+import { AccountEntity } from './entities';
 import { AccountRepository } from './account.repository';
 import { AccountController } from './account.controller';
 import { AccountService } from './account.service';
-import { JwtStrategy } from './strategies';
-import { EmailModule } from '../email';
 
-const providers: Provider[] = [
-  {
-    provide: ACCOUNT_SERVICE,
-    useClass: AccountService,
-  },
+const internalProviders: Provider[] = [
   {
     provide: ACCOUNT_REPOSITORY,
     useClass: AccountRepository,
   },
+];
+
+const externalProviders: Provider[] = [
   {
-    provide: EMAIL_CONFIRM_CODE_REPOSITORY,
-    useClass: EmailConfirmCodeRepository,
-  },
-  {
-    provide: JWT_STRATEGY,
-    useClass: JwtStrategy,
+    provide: ACCOUNT_SERVICE,
+    useClass: AccountService,
   },
 ];
 
-const entities = [
-  AccountEntity,
-  EmailConfirmCodeEntity,
-  ReservedUsernameEntity,
-  WorstPasswordEntity,
-];
+const entities = [AccountEntity];
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([...entities]),
-    PassportModule,
-    EmailModule,
-  ],
+  imports: [TypeOrmModule.forFeature([...entities]), PassportModule],
   controllers: [AccountController],
-  providers: [...providers],
+  providers: [...internalProviders, ...externalProviders],
+  exports: [...externalProviders],
 })
 export class AccountModule {}

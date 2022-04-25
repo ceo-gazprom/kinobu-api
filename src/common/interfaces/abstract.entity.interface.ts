@@ -1,5 +1,5 @@
 export interface IAbstractEntity {
-  id: number;
+  id: string;
   createdAt: Date;
   updatedAt: Date;
 }

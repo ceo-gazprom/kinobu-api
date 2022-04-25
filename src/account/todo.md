@@ -1,1 +1,2 @@
-temp accounts table
+- add temp accounts table
+- rename schema to accounts

@@ -1,6 +1,6 @@
 import { applyDecorators, Type } from '@nestjs/common';
 import { ApiOkResponse, getSchemaPath, ApiExtraModels } from '@nestjs/swagger';
-import { PageDto } from '../dto';
+import { PageDto } from '../dtos';
 
 /**
  * Api paginated response decorator
