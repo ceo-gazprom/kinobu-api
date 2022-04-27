@@ -1,5 +1,5 @@
-import type { IAbstractEntity } from '../../../common/interfaces';
-import type { RoleType } from '../../../common/types';
+import type { IAbstractEntity } from '../../../core/interfaces';
+import type { RoleType } from '../../../core/types';
 
 export interface IAccountEntity extends IAbstractEntity {
   username: string;

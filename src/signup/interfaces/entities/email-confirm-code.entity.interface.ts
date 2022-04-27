@@ -1,4 +1,4 @@
-import type { IAbstractEntity } from '../../../common/interfaces';
+import type { IAbstractEntity } from '../../../core/interfaces';
 
 export interface IEmailConfirmCodeEntity extends IAbstractEntity {
   email: string;

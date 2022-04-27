@@ -8,7 +8,7 @@ import {
   MinLength,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { Trim } from '../../common/decorators';
+import { Trim } from '../../core/decorators';
 import type { ICreateAccountDto } from '../interfaces';
 
 export class CreateAccountDto implements ICreateAccountDto {

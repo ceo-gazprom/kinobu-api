@@ -8,7 +8,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
-import { RequestIP } from '../common/decorators';
+import { RequestIP } from '../core/decorators';
 import { AccountDto } from '../account';
 import { SIGNUP_SERVICE } from './signup.constants';
 import { ISignupService } from './interfaces';

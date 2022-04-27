@@ -22,8 +22,8 @@ import {
 import { MOVIE_SERVICE } from './movie.constants';
 import { IMovieService } from './interfaces';
 import { MovieDto, CreateMovieDto } from './dtos';
-import { JwtAuthGuard } from '../common/guards';
-import type { IBufferedFile } from '../common/interfaces';
+import { JwtAuthGuard } from '../core/guards';
+import type { IBufferedFile } from '../core/interfaces';
 import {
   IMAGE_SERVICE,
   IImageService,
@@ -31,8 +31,8 @@ import {
   ForbiddenImageSizeFilter,
 } from '../image';
 import { Cacheable, CacheTtlSeconds } from '../cache';
-import { PageDto, PageMetaDto } from '../common/dtos';
-import { ApiPaginatedResponse } from '../common/decorators';
+import { PageDto, PageMetaDto } from '../core/dtos';
+import { ApiPaginatedResponse } from '../core/decorators';
 
 @Controller({
   version: '1',

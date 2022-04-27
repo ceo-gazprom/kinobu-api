@@ -7,7 +7,7 @@ import {
   Get,
 } from '@nestjs/common';
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
-import { RequestIP } from '../common/decorators';
+import { RequestIP } from '../core/decorators';
 import { AUTH_SERVICE } from './auth.constants';
 import { JwtDto, SigninDto } from './dtos';
 import {
@@ -40,13 +40,14 @@ export class AuthController {
     type: AccountNotFoundException,
   })
   public async signIn(
-    @RequestIP() ip: string,
-    @UserAgent() kek: string,
+    @RequestIP() ipAdress: string,
+    @UserAgent() userAgent: string,
     @Body() signinDto: SigninDto,
   ): Promise<IJwtDto> {
     const { login, password } = signinDto;
-    console.log(kek);
 
+    console.log(userAgent);
+    console.log(ipAdress);
     /**
      * We check that an account with this login exists
      */
@@ -62,7 +63,7 @@ export class AuthController {
     );
     if (!validation) throw new IncorrectPasswordException();
 
-    await this.authService.updateAccountIp(account.id, ip);
+    await this.authService.updateAccountIp(account.id, ipAdress);
 
     const token = this.authService.generateJwtToken(account.id);
 

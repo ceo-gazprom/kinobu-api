@@ -1,5 +1,5 @@
 import { Column, Entity } from 'typeorm';
-import { AbstractEntity } from '../../common';
+import { AbstractEntity } from '../../core';
 
 @Entity({
   name: 'users',

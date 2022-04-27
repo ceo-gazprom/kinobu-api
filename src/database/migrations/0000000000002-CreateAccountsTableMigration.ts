@@ -49,6 +49,11 @@ export class CreateAccountsTableMigration0000000000002
             type: 'boolean',
           },
           {
+            name: 'role',
+            default: 'user',
+            type: 'varchar',
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',

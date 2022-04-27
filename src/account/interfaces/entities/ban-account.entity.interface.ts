@@ -1,4 +1,4 @@
-import type { IAbstractEntity } from '../../../common/interfaces';
+import type { IAbstractEntity } from '../../../core/interfaces';
 
 export interface IBanAccountEntity extends IAbstractEntity {
   accountId: number;

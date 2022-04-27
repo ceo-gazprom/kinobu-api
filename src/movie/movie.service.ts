@@ -3,7 +3,7 @@ import { IMovieService, IMovieRepository } from './interfaces';
 import { MOVIE_REPOSITORY } from './movie.constants';
 import type { IMovieEntity } from './interfaces';
 import type { CreateMovieDto } from './dtos';
-import type { IPage } from '../common/interfaces';
+import type { IPage } from '../core/interfaces';
 
 @Injectable()
 export class MovieService implements IMovieService {

@@ -9,6 +9,7 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { RoleType } from '../core/types';
 import { Auth, AuthAccount } from '../auth';
 import { AccountDto, ChangePasswordAccountDto } from './dtos';
 import { ACCOUNT_SERVICE } from './account.constants';
@@ -26,13 +27,14 @@ export class AccountController {
     @Inject(ACCOUNT_SERVICE) private readonly accountService: IAccountService,
   ) {}
 
-  // @Get('me')
-  // // @Auth([RoleType.USER, RoleType.ADMIN])
-  // @ApiResponse({ type: AccountDto, description: 'current account info' })
-  // public getCurrentUser(): // @AuthAccount() accountEntity: IAccountEntity,
-  // AccountDto {
-  //   // return new AccountDto(accountEntity);
-  // }
+  @Get('me')
+  @Auth(RoleType.USER)
+  @ApiResponse({ type: AccountDto, description: 'current account info' })
+  public getCurrentUser(
+    @AuthAccount() accountEntity: IAccountEntity,
+  ): AccountDto {
+    return new AccountDto(accountEntity);
+  }
 
   @Post('change-password')
   // @Auth()

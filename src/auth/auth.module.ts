@@ -1,6 +1,6 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import type { Provider } from '@nestjs/common';
-import { AccountModule } from '../account';
+import { AccountModule } from '../account/account.module';
 import { AuthController } from './auth.controller';
 import { AUTH_SERVICE, JWT_STRATEGY } from './auth.constants';
 import { AuthService } from './auth.service';
@@ -18,7 +18,7 @@ const internalProviders: Provider[] = [
 ];
 
 @Module({
-  imports: [AccountModule],
+  imports: [forwardRef(() => AccountModule)],
   controllers: [AuthController],
   providers: [...internalProviders],
 })

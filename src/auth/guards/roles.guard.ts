@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import type { CanActivate, ExecutionContext } from '@nestjs/common';
 import type { IAccountEntity } from '../../account';
-import type { RoleType } from '../../common/types';
+import type { RoleType } from '../../core/types';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -18,6 +18,7 @@ export class RolesGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     const account = <IAccountEntity>request.account;
 
+    console.log(roles);
     return roles.includes(account.role);
   }
 }

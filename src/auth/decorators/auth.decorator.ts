@@ -1,6 +1,6 @@
 import { applyDecorators, SetMetadata, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiUnauthorizedResponse } from '@nestjs/swagger';
-import { RoleType } from '../../common/types';
+import { RoleType } from '../../core/types';
 import { JwtAuthGuard, RolesGuard } from '../guards';
 
 export function Auth(...roles: RoleType[]) {

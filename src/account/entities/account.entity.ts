@@ -1,7 +1,7 @@
 import { Entity, Column } from 'typeorm';
-import { AbstractEntity } from '../../common';
+import { AbstractEntity } from '../../core';
 import type { IAccountEntity } from '../interfaces';
-import { RoleType } from '../../common/types/role-type.enum';
+import { RoleType } from '../../core/types/role-type.enum';
 
 @Entity({
   schema: 'account',

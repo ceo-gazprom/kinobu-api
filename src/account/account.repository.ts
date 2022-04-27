@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import type { Repository } from 'typeorm';
-import { AbstractRepository } from '../common';
+import { AbstractRepository } from '../core';
 import { AccountEntity } from './entities';
 import type { IAccountRepository, ICreateAccount } from './interfaces';
 

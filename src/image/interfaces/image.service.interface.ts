@@ -1,4 +1,4 @@
-import type { IBufferedFile } from '../../common/interfaces';
+import type { IBufferedFile } from '../../core/interfaces';
 export interface IImageService {
   validateMimeType(mimeType: string): boolean;
   validateImageSize(imageSize: number): boolean;

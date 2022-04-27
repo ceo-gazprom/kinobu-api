@@ -1,4 +1,4 @@
-import { IAbstractEntity } from '../../common/interfaces';
+import { IAbstractEntity } from '../../core/interfaces';
 
 export interface IMovieEntity extends IAbstractEntity {
   kpId: number;

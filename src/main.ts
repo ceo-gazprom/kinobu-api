@@ -16,7 +16,7 @@ import RateLimit from 'express-rate-limit';
 import * as compression from 'compression';
 import * as bodyParser from 'body-parser';
 import * as cookieParser from 'cookie-parser';
-import { setupLogLevels, setupSwagger } from './common';
+import { setupLogLevels, setupSwagger } from './core';
 import { AppModule } from './app.module';
 
 export async function bootstrap(): Promise<NestExpressApplication> {

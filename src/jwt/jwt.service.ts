@@ -8,6 +8,7 @@ import type {
 } from './interfaces';
 import { JWT_CONFIG, REFRESH_TOKEN_REPOSITORY } from './jwt.constants';
 
+
 @Injectable()
 export class JwtService implements IJwtService {
   private readonly logger = new Logger(JwtService.name);
@@ -22,7 +23,7 @@ export class JwtService implements IJwtService {
    *
    * @param accountId
    */
-  public getAccessToken(accountId: number): string {
+  public getAccessToken(accountId: number, role: ): string {
     const payload: IJwtTokenPayload = { accountId };
     return this.generateAccessToken(payload);
   }

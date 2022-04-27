@@ -1,4 +1,4 @@
-import { IAbstractRepository } from '../../common/interfaces';
+import { IAbstractRepository } from '../../core/interfaces';
 import type { UserEntity } from '../entities';
 
 export type IUserRepository = IAbstractRepository<UserEntity>;
